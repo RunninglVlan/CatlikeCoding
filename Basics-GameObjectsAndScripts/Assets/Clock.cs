@@ -3,24 +3,18 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour {
 
-    private const float HOUR_FACTOR = 1 / 120f;
-    private const float MINUTE_FACTOR = 1 / 10f;
-    private const float SECOND_FACTOR = 6;
+    private const float DEGREES_PER_HOUR = 30;
+    private const float DEGREES = 6;
 
-    [SerializeField] Transform hoursTransform = default;
-    [SerializeField] Transform minutesTransform = default;
-    [SerializeField] Transform secondsTransform = default;
+    [SerializeField]
+    Transform hoursTransform = default,
+        minutesTransform = default,
+        secondsTransform = default;
 
     void Update() {
-        var currentTime = DateTime.Now;
-        hoursTransform.localRotation = Quaternion.Euler(0,
-            (HourSeconds() + MinuteSeconds() + currentTime.Second) * HOUR_FACTOR, 0);
-        minutesTransform.localRotation = Quaternion.Euler(0,
-            (MinuteSeconds() + currentTime.Second) * MINUTE_FACTOR, 0);
-        secondsTransform.localRotation = Quaternion.Euler(0,
-            currentTime.Second * SECOND_FACTOR, 0);
-
-        int HourSeconds() => currentTime.Hour * 60 * 60;
-        int MinuteSeconds() => currentTime.Minute * 60;
+        var currentTime = DateTime.Now.TimeOfDay;
+        hoursTransform.localRotation = Quaternion.Euler(0, (float)currentTime.TotalHours * DEGREES_PER_HOUR, 0);
+        minutesTransform.localRotation = Quaternion.Euler(0, (float)currentTime.TotalMinutes * DEGREES, 0);
+        secondsTransform.localRotation = Quaternion.Euler(0, currentTime.Seconds * DEGREES, 0);
     }
 }
