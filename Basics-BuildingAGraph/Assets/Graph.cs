@@ -6,10 +6,13 @@ public class Graph : MonoBehaviour {
     [SerializeField] Transform pointPrefab = default;
 
     void Awake() {
+        var scale = Vector3.one / 5;
+        var position = Vector3.right;
         foreach (var index in Enumerable.Range(-5, 10)) {
             var point = Instantiate(pointPrefab);
-            point.localPosition = Vector3.right * (index + .5f) / 5;
-            point.localScale = Vector3.one / 5;
+            point.localScale = scale;
+            position.x = (index + .5f) / 5;
+            point.localPosition = position;
         }
     }
 }
