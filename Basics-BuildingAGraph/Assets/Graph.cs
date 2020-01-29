@@ -7,8 +7,6 @@ public class Graph : MonoBehaviour {
     [SerializeField] Transform pointPrefab = default;
     [Range(10, 100)]
     [SerializeField] int resolution = 10;
-    [Range(0, 10)]
-    [SerializeField] int power = 3;
 
     void Awake() => Visualize();
 
@@ -37,7 +35,7 @@ public class Graph : MonoBehaviour {
     private void Animate() {
         foreach (Transform point in transform) {
             var position = point.position;
-            position.y = Mathf.Pow(position.x, power);
+            position.y = Mathf.Sin(Mathf.PI * (position.x + Time.time));
             point.localPosition = position;
         }
     }
