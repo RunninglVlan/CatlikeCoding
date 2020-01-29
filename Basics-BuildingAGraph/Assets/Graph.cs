@@ -12,12 +12,13 @@ public class Graph : MonoBehaviour {
 
     [Button]
     void Visualize() {
-        var scale = Vector3.one / 5;
+        var step = 2f / resolution;
+        var scale = Vector3.one * step;
         var position = Vector3.zero;
-        foreach (var index in Enumerable.Range(-5, resolution)) {
+        foreach (var index in Enumerable.Range(-resolution / 2, resolution)) {
             var point = Instantiate(pointPrefab);
             point.localScale = scale;
-            position.x = (index + .5f) / 5;
+            position.x = (index + .5f) * step;
             position.y = Mathf.Pow(position.x, 2);
             point.localPosition = position;
         }
