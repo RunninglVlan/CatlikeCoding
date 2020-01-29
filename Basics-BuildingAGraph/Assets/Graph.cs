@@ -7,6 +7,7 @@ public class Graph : MonoBehaviour {
     [SerializeField] Transform pointPrefab = default;
     [Range(10, 100)]
     [SerializeField] int resolution = 10;
+    [SerializeField] int power = 3;
 
     void Awake() => Visualize();
 
@@ -20,7 +21,7 @@ public class Graph : MonoBehaviour {
             var point = Instantiate(pointPrefab, transform);
             point.localScale = scale;
             position.x = (index + .5f) * step;
-            position.y = Mathf.Pow(position.x, 2);
+            position.y = Mathf.Pow(position.x, power);
             point.localPosition = position;
         }
 
