@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Information : MonoBehaviour {
 
     [HideInInspector]
-    [SerializeField] Image panel = default;
+    [SerializeField] RectTransform panel = default;
+    [HideInInspector]
+    [SerializeField] RectTransform panelBackground = default;
     [HideInInspector]
     [SerializeField] TextMeshProUGUI textComponent = default;
 
@@ -16,27 +17,26 @@ public class Information : MonoBehaviour {
     [SerializeField] string text = default;
     [SerializeField] string link = default;
 
-    private Vector3 shownPosition;
-    private Vector3 hiddenPosition;
+    private float shownPositionY, hiddenPositionY;
     private bool hidden = true;
 
     void Awake() {
-        shownPosition = new Vector3(panel.transform.position.x, 0);
-        hiddenPosition = new Vector3(panel.transform.position.x, -panel.rectTransform.sizeDelta.y);
+        shownPositionY = 0;
+        hiddenPositionY = -panel.sizeDelta.y;
     }
 
     public void bTogglePanel() {
         if (hidden) {
-            StartCoroutine(Toggle(hiddenPosition, shownPosition));
+            StartCoroutine(Toggle(hiddenPositionY, shownPositionY));
         } else {
-            StartCoroutine(Toggle(shownPosition, hiddenPosition));
+            StartCoroutine(Toggle(shownPositionY, hiddenPositionY));
         }
 
-        IEnumerator Toggle(Vector3 start, Vector3 target) {
+        IEnumerator Toggle(float startY, float targetY) {
             float time = 0f;
             while (time <= 1) {
                 time += movingSpeed * Time.fixedDeltaTime;
-                panel.transform.position = Vector3.Lerp(start, target, time);
+                panelBackground.position = panelBackground.position.SetY(Mathf.Lerp(startY, targetY, time));
                 yield return new WaitForFixedUpdate();
             }
             hidden = !hidden;
@@ -46,7 +46,13 @@ public class Information : MonoBehaviour {
     public void bOpenLink() => Application.OpenURL(link);
 
     void OnValidate() {
-        panel.rectTransform.sizeDelta = size;
+        panel.sizeDelta = size;
+        panelBackground.anchoredPosition = panelBackground.anchoredPosition.SetY(-size.y);
         textComponent.text = text;
     }
+}
+
+public static class VectorExtensions {
+    public static Vector2 SetY(this Vector2 vector, float y) => new Vector2(vector.x, y);
+    public static Vector3 SetY(this Vector3 vector, float y) => new Vector3(vector.x, y);
 }

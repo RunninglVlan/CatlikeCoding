@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -381,53 +381,40 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8751686535014085053, guid: 387ab1080e34f444a90fcc694324095c,
+    - target: {fileID: 601850748773864897, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
-      propertyPath: m_textInfo.characterCount
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8751686535014085053, guid: 387ab1080e34f444a90fcc694324095c,
+    - target: {fileID: 601850748773864897, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
-      propertyPath: m_textInfo.wordCount
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8751686535014085053, guid: 387ab1080e34f444a90fcc694324095c,
+    - target: {fileID: 601850748773864897, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
-      propertyPath: m_textInfo.lineCount
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8751686535014085053, guid: 387ab1080e34f444a90fcc694324095c,
+    - target: {fileID: 601850748773864897, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
-      propertyPath: m_textInfo.pageCount
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8751686535641189664, guid: 387ab1080e34f444a90fcc694324095c,
+    - target: {fileID: 8751686535802875269, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 259.14
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8751686536142649498, guid: 387ab1080e34f444a90fcc694324095c,
+    - target: {fileID: 8751686535802875269, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
+    - target: {fileID: 8751686535802875269, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
-      propertyPath: link
-      value: https://catlikecoding.com/unity/tutorials/basics/building-a-graph/
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: text
-      value: 'Catlike Coding Basic Tutorial
-
-        Building a Graph - Visualizing
-        Math'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: size.x
-      value: 259.14
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8751686536597924340, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
@@ -487,56 +474,6 @@ PrefabInstance:
     - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686537067554059, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686537067554059, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686537067554059, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686537067554059, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686537067554059, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
