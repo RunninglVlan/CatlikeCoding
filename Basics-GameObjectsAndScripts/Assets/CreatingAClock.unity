@@ -440,6 +440,141 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346164140}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &550238266
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8751686535014085053, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686535014085053, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686535014085053, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686535014085053, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686535641189664, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 329
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686535802875269, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686535802875269, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686535802875269, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: link
+      value: https://catlikecoding.com/unity/tutorials/basics/game-objects-and-scripts/
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: text
+      value: 'Catlike Coding Basic Tutorial
+
+        Game Objects and Scripts -
+        Creating a Clock'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: size.x
+      value: 329
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924340, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_Name
+      value: Information
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_text
+      value: 'Catlike Coding Basic Tutorial
+
+        Game Objects and Scripts -
+        Creating a Clock'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 387ab1080e34f444a90fcc694324095c, type: 3}
 --- !u!1 &586517712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,72 +1881,3 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121186557}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &8751686535994292634
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8751686536597924340, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_Name
-      value: Information
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 387ab1080e34f444a90fcc694324095c, type: 3}
