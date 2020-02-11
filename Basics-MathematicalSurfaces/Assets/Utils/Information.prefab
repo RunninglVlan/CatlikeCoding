@@ -598,10 +598,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 8751686535641189664}
   textComponent: {fileID: 8751686536860598743}
+  panelEnabled: 0
   size: {x: 259, y: 70}
   text: 'Catlike Coding Basic Tutorial
 
     Building a Graph - Visualizing Math'
+  controls: 
   link: https://catlikecoding.com/unity/tutorials/basics/building-a-graph/
 --- !u!1 &8751686536860598737
 GameObject:
@@ -668,7 +670,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Catlike Coding Basic Tutorial
 
-    Building a Graph - Visualizing Math'
+    Building a Graph - Visualizing Math
+
+    Controls: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

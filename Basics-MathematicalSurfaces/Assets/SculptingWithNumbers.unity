@@ -406,6 +406,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 355
       objectReference: {fileID: 0}
+    - target: {fileID: 8751686535641189664, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 85
+      objectReference: {fileID: 0}
     - target: {fileID: 8751686535641189667, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
       propertyPath: m_IsActive
@@ -428,6 +433,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
+      propertyPath: controls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
       propertyPath: text
       value: 'Catlike Coding Basic Tutorial
 
@@ -443,6 +453,31 @@ PrefabInstance:
         type: 3}
       propertyPath: size.x
       value: 355
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: panelEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: controls
+      value: '[C]hange function'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: size.y
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: controls.Array.data[0]
+      value: '[C]hange functions'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: controls.Array.data[1]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8751686536597924340, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
@@ -503,6 +538,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_text
+      value: 'Catlike Coding Basic Tutorial
+
+        Mathematical Surfaces - Sculpting
+        with Numbers
+
+        Controls: [C]hange function'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 104
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 387ab1080e34f444a90fcc694324095c, type: 3}
