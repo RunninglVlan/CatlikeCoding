@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Graph : MonoBehaviour {
 
-    private static readonly Func<float, float, float>[] functions = { Sine, MultiSine };
+    private static readonly Func<float, float, float, float>[] functions = { Sine, MultiSine };
 
     [SerializeField] Transform pointPrefab = default;
     [Range(10, 100)]
@@ -47,15 +47,15 @@ public class Graph : MonoBehaviour {
         var function = functions[currentFunction];
         foreach (Transform point in transform) {
             var position = point.position;
-            position.y = function(position.x, time);
+            position.y = function(position.x, position.z, time);
             point.localPosition = position;
         }
     }
 
-    private static float Sine(float x, float time) => Mathf.Sin(Mathf.PI * (x + time));
+    private static float Sine(float x, float z, float time) => Mathf.Sin(Mathf.PI * (x + time));
 
-    private static float MultiSine(float x, float time) {
-        var y = Sine(x, time);
+    private static float MultiSine(float x, float z, float time) {
+        var y = Sine(x, z, time);
         y += Mathf.Sin(2 * Mathf.PI * (x + 2 * time)) / 2;
         y *= 2f / 3;
         return y;
