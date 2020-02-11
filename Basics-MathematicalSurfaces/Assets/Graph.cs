@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ public class Graph : MonoBehaviour {
     [SerializeField] Transform pointPrefab = default;
     [Range(10, 100)]
     [SerializeField] int resolution = 10;
+
+    private Func<float, float, float>[] functions = { Sine, MultiSine };
+    private int currentFunction = 0;
 
     void Awake() => Visualize();
 
@@ -30,13 +34,19 @@ public class Graph : MonoBehaviour {
         }
     }
 
-    void Update() => Animate();
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.C)) {
+            currentFunction = currentFunction + 1 < functions.Length ? currentFunction + 1 : 0;
+        }
+        Animate();
+    }
 
     private void Animate() {
         var time = Time.time;
+        var function = functions[currentFunction];
         foreach (Transform point in transform) {
             var position = point.position;
-            position.y = MultiSine(position.x, time);
+            position.y = function(position.x, time);
             point.localPosition = position;
         }
     }
