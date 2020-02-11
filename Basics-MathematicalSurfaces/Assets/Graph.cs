@@ -21,7 +21,7 @@ public class Graph : MonoBehaviour {
         var step = 2f / resolution;
         var scale = Vector3.one * step;
         var position = Vector3.zero;
-        for (int z = 0; z < resolution; z++) {
+        foreach (var z in Enumerable.Range(-resolution / 2, resolution)) {
             position.z = (z + .5f) * step;
             foreach (var x in Enumerable.Range(-resolution / 2, resolution)) {
                 var point = Instantiate(pointPrefab, transform);
@@ -55,10 +55,10 @@ public class Graph : MonoBehaviour {
         }
     }
 
-    private static float Sine(float x, float z, float time) => Mathf.Sin(Mathf.PI * (x + time));
+    private static float Sine(float x, float _, float time) => Mathf.Sin(Mathf.PI * (x + time));
 
-    private static float MultiSine(float x, float z, float time) {
-        var y = Sine(x, z, time);
+    private static float MultiSine(float x, float _, float time) {
+        var y = Sine(x, _, time);
         y += Mathf.Sin(2 * Mathf.PI * (x + 2 * time)) / 2;
         y *= 2f / 3;
         return y;
