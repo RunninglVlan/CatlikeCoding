@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Graph : MonoBehaviour {
 
+    private static readonly Func<float, float, float>[] functions = { Sine, MultiSine };
+
     [SerializeField] Transform pointPrefab = default;
     [Range(10, 100)]
     [SerializeField] int resolution = 10;
 
-    private Func<float, float, float>[] functions = { Sine, MultiSine };
     private int currentFunction = 0;
 
     void Awake() => Visualize();
