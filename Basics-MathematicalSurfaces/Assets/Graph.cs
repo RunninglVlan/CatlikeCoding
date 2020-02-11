@@ -33,10 +33,13 @@ public class Graph : MonoBehaviour {
     void Update() => Animate();
 
     private void Animate() {
+        var time = Time.time;
         foreach (Transform point in transform) {
             var position = point.position;
-            position.y = Mathf.Sin(Mathf.PI * (position.x + Time.time));
+            position.y = Sine(position.x, time);
             point.localPosition = position;
         }
     }
+
+    private static float Sine(float x, float time) => Mathf.Sin(Mathf.PI * (x + time));
 }
