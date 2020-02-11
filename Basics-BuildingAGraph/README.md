@@ -4,4 +4,4 @@
 
 ## What's new
 - Optimization: Remember to move loop-invariant code out of loops
-- Shader Graph works with URP (and HDRP)
+- Used Shader Graph instead of coding shader. Shader Graph needs URP (or HDRP) to work
