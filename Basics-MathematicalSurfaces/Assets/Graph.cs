@@ -22,11 +22,11 @@ public class Graph : MonoBehaviour {
         var scale = Vector3.one * step;
         var position = Vector3.zero;
         for (int z = 0; z < resolution; z++) {
+            position.z = (z + .5f) * step;
             foreach (var x in Enumerable.Range(-resolution / 2, resolution)) {
                 var point = Instantiate(pointPrefab, transform);
                 point.localScale = scale;
                 position.x = (x + .5f) * step;
-                position.z = (z + .5f) * step;
                 point.localPosition = position;
             }
         }
