@@ -2,10 +2,11 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.Mathf;
 
 public class Graph : MonoBehaviour {
 
-    private static readonly Func<float, float, float, float>[] functions = { Sine, MultiSine };
+    private static readonly Func<float, float, float, float>[] functions = { Sine, Sine2D, MultiSine };
 
     [SerializeField] Transform pointPrefab = default;
     [Range(10, 100)]
@@ -55,11 +56,13 @@ public class Graph : MonoBehaviour {
         }
     }
 
-    private static float Sine(float x, float _, float time) => Mathf.Sin(Mathf.PI * (x + time));
+    private static float Sine(float x, float _, float time) => Mathf.Sin(PI * (x + time));
+
+    private static float Sine2D(float x, float z, float time) => (Sine(x, 0, time) + Sine(z, 0, time)) * .5f;
 
     private static float MultiSine(float x, float _, float time) {
         var y = Sine(x, _, time);
-        y += Mathf.Sin(2 * Mathf.PI * (x + 2 * time)) / 2;
+        y += Mathf.Sin(2 * PI * (x + 2 * time)) / 2;
         y *= 2f / 3;
         return y;
     }
