@@ -6,7 +6,7 @@ using static UnityEngine.Mathf;
 
 public class Graph : MonoBehaviour {
 
-    private static readonly Func<float, float, float, float>[] functions = { Sine, Sine2D, MultiSine };
+    private static readonly Func<float, float, float, float>[] functions = { Sine, Sine2D, MultiSine, MultiSine2D };
 
     [SerializeField] Transform pointPrefab = default;
     [Range(10, 100)]
@@ -64,6 +64,14 @@ public class Graph : MonoBehaviour {
         var y = Sine(x, _, time);
         y += Mathf.Sin(2 * PI * (x + 2 * time)) / 2;
         y *= 2f / 3;
+        return y;
+    }
+
+    private static float MultiSine2D(float x, float z, float time) {
+        var y = 4f * Mathf.Sin(PI * (x + z + time * .5f));
+        y += Sine(x, 0, time);
+        y += Mathf.Sin(2f * PI * (z + 2f * time)) * .5f;
+        y *= 1f / 5.5f;
         return y;
     }
 }
