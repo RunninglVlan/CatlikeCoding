@@ -36,10 +36,17 @@ public class Graph : MonoBehaviour {
         var time = Time.time;
         foreach (Transform point in transform) {
             var position = point.position;
-            position.y = Sine(position.x, time);
+            position.y = MultiSine(position.x, time);
             point.localPosition = position;
         }
     }
 
     private static float Sine(float x, float time) => Mathf.Sin(Mathf.PI * (x + time));
+
+    private static float MultiSine(float x, float time) {
+        var y = Sine(x, time);
+        y += Mathf.Sin(2 * Mathf.PI * (x + 2 * time)) / 2;
+        y *= 2f / 3;
+        return y;
+    }
 }
