@@ -45,6 +45,15 @@ public class Graph : MonoBehaviour {
         currentFunction = currentFunction + 1 < functions.Length ? currentFunction + 1 : 0;
     }
 
+    public void bChangeResolution(int delta) {
+        var newResolution = Mathf.Clamp(resolution + delta, 10, 100);
+        if (resolution == newResolution) {
+            return;
+        }
+        resolution = newResolution;
+        Initialize();
+    }
+
     void Update() => Animate();
 
     private void Animate() {
