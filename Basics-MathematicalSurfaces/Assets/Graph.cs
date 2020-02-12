@@ -8,7 +8,7 @@ using static UnityEngine.Mathf;
 public class Graph : MonoBehaviour {
 
     private static readonly Func<float, float, float, Vector3>[] functions = {
-        Sine, Sine2D, MultiSine, MultiSine2D, Ripple, Cylinder, Sphere
+        Sine, Sine2D, MultiSine, MultiSine2D, Ripple, Cylinder, Sphere, Torus
     };
 
     [SerializeField] Transform pointPrefab = default;
@@ -112,6 +112,13 @@ public class Graph : MonoBehaviour {
         radius += Sine(4 * v, time) * .1f;
         var s = radius * Cos(.5f * v);
         return new Vector3(s * Sine(u), radius * Sine(.5f * v), s * Cos(u));
+    }
+
+    private static Vector3 Torus(float u, float v, float time) {
+        var radius1 = .65f + Sine(6 * u, time) * .1f;
+        var radius2 = .2f + Sine(4 * v, time) * .05f;
+        var s = radius2 * Cos(v) + radius1;
+        return new Vector3(s * Sine(u), radius2 * Sine(v), s * Cos(u));
     }
 
     private static float Sine(float angle, float time = 0) => Mathf.Sin(PI * (angle + time));
