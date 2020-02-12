@@ -381,6 +381,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4703432563019650726, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703432563019650726, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703432563019650726, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703432563019650726, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8751686535641189664, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -394,7 +414,7 @@ PrefabInstance:
     - target: {fileID: 8751686535641189664, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8751686535641189664, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
@@ -429,6 +449,11 @@ PrefabInstance:
     - target: {fileID: 8751686535802875269, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8751686535802875269, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8751686536597924330, guid: 387ab1080e34f444a90fcc694324095c,
@@ -482,7 +507,7 @@ PrefabInstance:
     - target: {fileID: 8751686536597924340, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
       propertyPath: m_Name
-      value: Information
+      value: Utils
       objectReference: {fileID: 0}
     - target: {fileID: 8751686536597924341, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
@@ -547,7 +572,7 @@ PrefabInstance:
         Mathematical Surfaces - Sculpting
         with Numbers
 
-        Controls: [C]hange function'
+        Controls: Mouse Click/Touch - Change functions'
       objectReference: {fileID: 0}
     - target: {fileID: 8751686536860598743, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}

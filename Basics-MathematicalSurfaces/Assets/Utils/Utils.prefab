@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 8751686535641189670}
   - component: {fileID: 8751686535641189665}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: InfoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 8751686535802875323}
   - component: {fileID: 8751686535802875322}
   m_Layer: 5
-  m_Name: Button
+  m_Name: InfoButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 8751686536597924341}
   - component: {fileID: 8751686536597924330}
   m_Layer: 0
-  m_Name: Information
+  m_Name: Utils
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -603,7 +603,7 @@ MonoBehaviour:
   text: 'Catlike Coding Basic Tutorial
 
     Building a Graph - Visualizing Math'
-  controls: 
+  controls: []
   link: https://catlikecoding.com/unity/tutorials/basics/building-a-graph/
 --- !u!1 &8751686536860598737
 GameObject:
