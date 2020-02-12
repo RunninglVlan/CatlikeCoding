@@ -57,9 +57,6 @@ public class Graph : MonoBehaviour {
     void Update() => Animate();
 
     private void Animate() {
-        if (!points.Any()) { // Could be removed for build, used only in development
-            Initialize();
-        }
         var time = Time.time;
         var function = functions[currentFunction];
         IteratePoints((u, v) => {
