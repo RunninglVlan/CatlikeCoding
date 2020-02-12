@@ -41,12 +41,11 @@ public class Graph : MonoBehaviour {
         }
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Mouse0)) {
-            currentFunction = currentFunction + 1 < functions.Length ? currentFunction + 1 : 0;
-        }
-        Animate();
+    public void bChangeFunction() {
+        currentFunction = currentFunction + 1 < functions.Length ? currentFunction + 1 : 0;
     }
+
+    void Update() => Animate();
 
     private void Animate() {
         if (!points.Any()) { // Could be removed for build, used only in development
