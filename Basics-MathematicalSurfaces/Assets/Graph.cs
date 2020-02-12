@@ -40,7 +40,7 @@ public class Graph : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.C)) {
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
             currentFunction = currentFunction + 1 < functions.Length ? currentFunction + 1 : 0;
         }
         Animate();
