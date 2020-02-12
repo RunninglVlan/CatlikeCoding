@@ -96,29 +96,33 @@ public class Graph : MonoBehaviour {
     }
 
     private static Vector3 Ripple(float x, float z, float time) {
+        const float multiplier = 1.3f;
         var distance = Mathf.Sqrt(x * x + z * z);
         var y = Mathf.Sin(4 * (PI * distance - time));
         y /= 1 + 10 * distance;
-        return new Vector3(x, y, z);
+        return new Vector3(x * multiplier, y, z * multiplier);
     }
 
     private static Vector3 Cylinder(float u, float v, float time) {
+        const float multiplier = 1.3f;
         var radius = .8f + Sine(6 * u + 2 * v, time) * .2f;
-        return new Vector3(radius * Sine(u), v, radius * Cos(u));
+        return new Vector3(radius * Sine(u) * multiplier, v, radius * Cos(u) * multiplier);
     }
 
     private static Vector3 Sphere(float u, float v, float time) {
+        const float multiplier = 1.3f;
         var radius = .8f + Sine(6 * u, time) * .1f;
         radius += Sine(4 * v, time) * .1f;
         var s = radius * Cos(.5f * v);
-        return new Vector3(s * Sine(u), radius * Sine(.5f * v), s * Cos(u));
+        return new Vector3(s * Sine(u) * multiplier, radius * Sine(.5f * v) * multiplier, s * Cos(u) * multiplier);
     }
 
     private static Vector3 Torus(float u, float v, float time) {
+        const float multiplier = 1.5f;
         var radius1 = .65f + Sine(6 * u, time) * .1f;
         var radius2 = .2f + Sine(4 * v, time) * .05f;
         var s = radius2 * Cos(v) + radius1;
-        return new Vector3(s * Sine(u), radius2 * Sine(v), s * Cos(u));
+        return new Vector3(s * Sine(u) * multiplier, radius2 * Sine(v) * multiplier, s * Cos(u) * multiplier);
     }
 
     private static float Sine(float angle, float time = 0) => Mathf.Sin(PI * (angle + time));
