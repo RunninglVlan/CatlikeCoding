@@ -108,8 +108,10 @@ public class Graph : MonoBehaviour {
     }
 
     private static Vector3 Sphere(float u, float v, float time) {
-        var radius = Cos(.5f * v);
-        return new Vector3(radius * Sine(u), Sine(.5f * v), radius * Cos(u));
+        var radius = .8f + Sine(6 * u, time) * .1f;
+        radius += Sine(4 * v, time) * .1f;
+        var s = radius * Cos(.5f * v);
+        return new Vector3(s * Sine(u), radius * Sine(.5f * v), s * Cos(u));
     }
 
     private static float Sine(float angle, float time = 0) => Mathf.Sin(PI * (angle + time));
