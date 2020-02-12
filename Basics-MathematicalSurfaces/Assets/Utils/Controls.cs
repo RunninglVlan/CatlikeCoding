@@ -16,23 +16,28 @@ public class Controls : MonoBehaviour {
 
     [Button]
     void Rebuild() {
-        foreach (Transform button in container) {
-            if (!button.gameObject.activeSelf) {
-                continue;
-            }
-            DestroyImmediate(button.gameObject);
-        }
+        Clear();
+        Clear();
         foreach (var control in controls) {
             var button = Instantiate(prefabButton, container);
             button.GetComponentInChildren<TMP_Text>().text = control.text;
             button.onClick = control.onClick;
             button.gameObject.SetActive(true);
         }
+
+        void Clear() {
+            foreach (Transform button in container) {
+                if (!button.gameObject.activeSelf) {
+                    continue;
+                }
+                DestroyImmediate(button.gameObject);
+            }
+        }
     }
 
     [Serializable]
-    struct Control {
-        public string text;
-        public ButtonClickedEvent onClick;
+    class Control {
+        public string text = default;
+        public ButtonClickedEvent onClick = default;
     }
 }
