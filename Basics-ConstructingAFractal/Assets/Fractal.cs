@@ -16,14 +16,17 @@ public class Fractal : MonoBehaviour {
     [SerializeField] int maxDepth = 4;
     [SerializeField] float childScale = .5f;
     [SerializeField] float spawnChance = .5f;
+    [SerializeField] float maxRotationSpeed = 60;
 
     Material[,] materials;
+    float rotationSpeed;
     int depth;
 
     void Start() {
         if (materials == null) {
             InitializeMaterials();
         }
+        rotationSpeed = Random.Range(-maxRotationSpeed, maxRotationSpeed);
         gameObject.AddComponent<MeshFilter>().mesh = meshes[Random.Range(0, meshes.Length)];
         gameObject.AddComponent<MeshRenderer>().material = materials[depth, Random.Range(0, 2)];
         if (depth < maxDepth) {
@@ -59,6 +62,7 @@ public class Fractal : MonoBehaviour {
         maxDepth = parent.maxDepth;
         childScale = parent.childScale;
         spawnChance = parent.spawnChance;
+        maxRotationSpeed = parent.maxRotationSpeed;
         materials = parent.materials;
         depth = parent.depth + 1;
         var childTransform = transform;
@@ -68,9 +72,7 @@ public class Fractal : MonoBehaviour {
         childTransform.localRotation = orientation;
     }
 
-    void Update() {
-        transform.Rotate(0, 30 * Time.deltaTime, 0);
-    }
+    void Update() => transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
 
     readonly struct Child {
         public readonly Vector3 direction;
