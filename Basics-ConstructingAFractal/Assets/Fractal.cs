@@ -17,9 +17,8 @@ public class Fractal : MonoBehaviour {
     [SerializeField] float childScale = .5f;
     [SerializeField] float spawnChance = .5f;
 
-    int depth;
-
     Material[,] materials;
+    int depth;
 
     void Start() {
         if (materials == null) {
@@ -57,11 +56,11 @@ public class Fractal : MonoBehaviour {
 
     void Initialize(Fractal parent, Vector3 direction, Quaternion orientation) {
         meshes = parent.meshes;
-        materials = parent.materials;
         maxDepth = parent.maxDepth;
-        depth = parent.depth + 1;
         childScale = parent.childScale;
         spawnChance = parent.spawnChance;
+        materials = parent.materials;
+        depth = parent.depth + 1;
         var childTransform = transform;
         childTransform.parent = parent.transform;
         childTransform.localScale = Vector3.one * childScale;
