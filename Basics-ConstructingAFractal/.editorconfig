@@ -1,4 +1,4 @@
-
+﻿
 [*]
 charset=utf-8
 end_of_line=crlf
@@ -69,10 +69,17 @@ dotnet_style_qualification_for_method=false:suggestion
 dotnet_style_qualification_for_property=false:suggestion
 
 # ReSharper properties
+resharper_apply_auto_detected_rules=false
 resharper_autodetect_indent_settings=true
 resharper_blank_lines_after_block_statements=0
 resharper_csharp_insert_final_newline=true
+resharper_csharp_naming_rule.constants=AA_BB
+resharper_csharp_naming_rule.private_constants=AA_BB
+resharper_csharp_naming_rule.private_static_fields=aaBb
+resharper_csharp_naming_rule.private_static_readonly=aaBb,AA_BB
+resharper_csharp_naming_rule.static_readonly=AaBb
 resharper_default_private_modifier=implicit
+resharper_enforce_line_ending_style=true
 resharper_use_indent_from_vs=false
 
 # ReSharper inspection severities
