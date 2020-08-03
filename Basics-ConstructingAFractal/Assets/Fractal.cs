@@ -69,6 +69,10 @@ public class Fractal : MonoBehaviour {
         childTransform.localRotation = orientation;
     }
 
+    void Update() {
+        transform.Rotate(0, 30 * Time.deltaTime, 0);
+    }
+
     readonly struct Child {
         public readonly Vector3 direction;
         public readonly Quaternion orientation;
