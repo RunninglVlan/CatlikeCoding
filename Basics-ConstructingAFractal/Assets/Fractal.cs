@@ -9,6 +9,12 @@ public class Fractal : MonoBehaviour {
 
     int depth;
 
+    static readonly Child[] children = {
+        new Child(Vector3.up, Quaternion.identity),
+        new Child(Vector3.right, Quaternion.Euler(0, 0, -90)),
+        new Child(Vector3.left, Quaternion.Euler(0, 0, 90))
+    };
+
     void Start() {
         gameObject.AddComponent<MeshFilter>().mesh = mesh;
         gameObject.AddComponent<MeshRenderer>().material = material;
@@ -17,15 +23,11 @@ public class Fractal : MonoBehaviour {
         }
 
         IEnumerator AddChildren() {
-            yield return new WaitForSeconds(.5f);
-            new GameObject("Fractal Child").AddComponent<Fractal>()
-                .Initialize(this, Vector3.up, Quaternion.identity);
-            yield return new WaitForSeconds(.5f);
-            new GameObject("Fractal Child").AddComponent<Fractal>()
-                .Initialize(this, Vector3.right, Quaternion.Euler(0, 0, -90));
-            yield return new WaitForSeconds(.5f);
-            new GameObject("Fractal Child").AddComponent<Fractal>()
-                .Initialize(this, Vector3.left, Quaternion.Euler(0, 0, 90));
+            foreach (var child in children) {
+                yield return new WaitForSeconds(.5f);
+                new GameObject("Fractal Child").AddComponent<Fractal>()
+                    .Initialize(this, child.direction, child.orientation);
+            }
         }
     }
 
@@ -40,5 +42,15 @@ public class Fractal : MonoBehaviour {
         childTransform.localScale = Vector3.one * childScale;
         childTransform.localPosition = direction * (.5f + .5f * childScale);
         childTransform.localRotation = orientation;
+    }
+
+    readonly struct Child {
+        public readonly Vector3 direction;
+        public readonly Quaternion orientation;
+
+        public Child(Vector3 direction, Quaternion orientation) {
+            this.direction = direction;
+            this.orientation = orientation;
+        }
     }
 }
