@@ -4,6 +4,7 @@ public class Fractal : MonoBehaviour {
     [SerializeField] Mesh mesh = default;
     [SerializeField] Material material = default;
     [SerializeField] int maxDepth = 4;
+    [SerializeField] float childScale = .5f;
 
     int depth;
 
@@ -20,6 +21,10 @@ public class Fractal : MonoBehaviour {
         material = parent.material;
         maxDepth = parent.maxDepth;
         depth = parent.depth + 1;
-        transform.parent = parent.transform;
+        childScale = parent.childScale;
+        var childTransform = transform;
+        childTransform.parent = parent.transform;
+        childTransform.localScale = Vector3.one * childScale;
+        childTransform.localPosition = Vector3.up * (.5f + .5f * childScale);
     }
 }
