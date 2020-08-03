@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Fractal : MonoBehaviour {
     [SerializeField] Mesh mesh = default;
@@ -12,7 +13,13 @@ public class Fractal : MonoBehaviour {
         gameObject.AddComponent<MeshFilter>().mesh = mesh;
         gameObject.AddComponent<MeshRenderer>().material = material;
         if (depth < maxDepth) {
+            StartCoroutine(AddChildren());
+        }
+
+        IEnumerator AddChildren() {
+            yield return new WaitForSeconds(.5f);
             new GameObject("Fractal Child").AddComponent<Fractal>().Initialize(this, Vector3.up);
+            yield return new WaitForSeconds(.5f);
             new GameObject("Fractal Child").AddComponent<Fractal>().Initialize(this, Vector3.right);
         }
     }
