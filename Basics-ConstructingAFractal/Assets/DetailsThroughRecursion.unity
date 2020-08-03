@@ -244,6 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f466e0854b8d33b4ab3937282a1a0105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: 79f7576ba66b1b54382c367bf7856646, type: 2}
 --- !u!4 &462390394
 Transform:
   m_ObjectHideFlags: 0
