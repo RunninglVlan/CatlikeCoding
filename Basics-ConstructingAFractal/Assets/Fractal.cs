@@ -15,6 +15,7 @@ public class Fractal : MonoBehaviour {
     [SerializeField] Material material = default;
     [SerializeField] int maxDepth = 4;
     [SerializeField] float childScale = .5f;
+    [SerializeField] float spawnChance = .5f;
 
     int depth;
 
@@ -33,6 +34,9 @@ public class Fractal : MonoBehaviour {
         IEnumerator AddChildren() {
             foreach (var child in CHILDREN) {
                 yield return new WaitForSeconds(Random.Range(.1f, .5f));
+                if (Random.value > spawnChance) {
+                    continue;
+                }
                 new GameObject("Fractal Child").AddComponent<Fractal>()
                     .Initialize(this, child.direction, child.orientation);
             }
@@ -57,6 +61,7 @@ public class Fractal : MonoBehaviour {
         maxDepth = parent.maxDepth;
         depth = parent.depth + 1;
         childScale = parent.childScale;
+        spawnChance = parent.spawnChance;
         var childTransform = transform;
         childTransform.parent = parent.transform;
         childTransform.localScale = Vector3.one * childScale;
