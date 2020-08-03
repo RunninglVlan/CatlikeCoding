@@ -12,7 +12,9 @@ public class Fractal : MonoBehaviour {
     static readonly Child[] children = {
         new Child(Vector3.up, Quaternion.identity),
         new Child(Vector3.right, Quaternion.Euler(0, 0, -90)),
-        new Child(Vector3.left, Quaternion.Euler(0, 0, 90))
+        new Child(Vector3.left, Quaternion.Euler(0, 0, 90)),
+        new Child(Vector3.forward, Quaternion.Euler(90, 0, 0)),
+        new Child(Vector3.back, Quaternion.Euler(-90, 0, 0))
     };
 
     void Start() {
