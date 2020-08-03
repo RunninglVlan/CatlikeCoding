@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/DetailsThroughRecursion.unity
+    guid: 06a487be7c93bc8488ceeae72af494fc
   m_configObjects: {}
