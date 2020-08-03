@@ -26,7 +26,7 @@ public class Fractal : MonoBehaviour {
 
         IEnumerator AddChildren() {
             foreach (var child in children) {
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(Random.Range(.1f, .5f));
                 new GameObject("Fractal Child").AddComponent<Fractal>()
                     .Initialize(this, child.direction, child.orientation);
             }

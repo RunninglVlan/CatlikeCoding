@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   material: {fileID: 2100000, guid: 79f7576ba66b1b54382c367bf7856646, type: 2}
-  maxDepth: 4
+  maxDepth: 5
   childScale: 0.5
