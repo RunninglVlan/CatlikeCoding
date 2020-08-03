@@ -11,7 +11,7 @@ public class Fractal : MonoBehaviour {
         new Child(Vector3.back, Quaternion.Euler(-90, 0, 0))
     };
 
-    [SerializeField] Mesh mesh = default;
+    [SerializeField] Mesh[] meshes = default;
     [SerializeField] Material material = default;
     [SerializeField] int maxDepth = 4;
     [SerializeField] float childScale = .5f;
@@ -24,7 +24,7 @@ public class Fractal : MonoBehaviour {
         if (materials == null) {
             InitializeMaterials();
         }
-        gameObject.AddComponent<MeshFilter>().mesh = mesh;
+        gameObject.AddComponent<MeshFilter>().mesh = meshes[Random.Range(0, meshes.Length)];
         gameObject.AddComponent<MeshRenderer>().material = materials[depth, Random.Range(0, 2)];
         if (depth < maxDepth) {
             StartCoroutine(AddChildren());
@@ -52,7 +52,7 @@ public class Fractal : MonoBehaviour {
     }
 
     void Initialize(Fractal parent, Vector3 direction, Quaternion orientation) {
-        mesh = parent.mesh;
+        meshes = parent.meshes;
         materials = parent.materials;
         maxDepth = parent.maxDepth;
         depth = parent.depth + 1;
