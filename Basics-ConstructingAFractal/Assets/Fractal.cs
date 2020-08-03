@@ -2,20 +2,20 @@
 using UnityEngine;
 
 public class Fractal : MonoBehaviour {
-    [SerializeField] Mesh mesh = default;
-    [SerializeField] Material material = default;
-    [SerializeField] int maxDepth = 4;
-    [SerializeField] float childScale = .5f;
-
-    int depth;
-
-    static readonly Child[] children = {
+    static readonly Child[] CHILDREN = {
         new Child(Vector3.up, Quaternion.identity),
         new Child(Vector3.right, Quaternion.Euler(0, 0, -90)),
         new Child(Vector3.left, Quaternion.Euler(0, 0, 90)),
         new Child(Vector3.forward, Quaternion.Euler(90, 0, 0)),
         new Child(Vector3.back, Quaternion.Euler(-90, 0, 0))
     };
+
+    [SerializeField] Mesh mesh = default;
+    [SerializeField] Material material = default;
+    [SerializeField] int maxDepth = 4;
+    [SerializeField] float childScale = .5f;
+
+    int depth;
 
     void Start() {
         gameObject.AddComponent<MeshFilter>().mesh = mesh;
@@ -26,7 +26,7 @@ public class Fractal : MonoBehaviour {
         }
 
         IEnumerator AddChildren() {
-            foreach (var child in children) {
+            foreach (var child in CHILDREN) {
                 yield return new WaitForSeconds(Random.Range(.1f, .5f));
                 new GameObject("Fractal Child").AddComponent<Fractal>()
                     .Initialize(this, child.direction, child.orientation);
