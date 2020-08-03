@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Fractal : MonoBehaviour {
     static readonly Child[] CHILDREN = {
@@ -41,10 +42,13 @@ public class Fractal : MonoBehaviour {
     void InitializeMaterials() {
         materials = new Material[maxDepth + 1];
         for (var index = 0; index <= maxDepth; index++) {
+            var t = (float)index / (maxDepth - 1);
+            t *= t;
             materials[index] = new Material(material) {
-                color = Color.Lerp(Color.white, Color.yellow, (float) index / maxDepth)
+                color = Color.Lerp(Color.white, Color.yellow, t)
             };
         }
+        materials[maxDepth].color = Color.magenta;
     }
 
     void Initialize(Fractal parent, Vector3 direction, Quaternion orientation) {
