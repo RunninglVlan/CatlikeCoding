@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿using JetBrains.Annotations;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class Graph : MonoBehaviour {
@@ -32,8 +33,14 @@ public class Graph : MonoBehaviour {
         }
     }
 
-    public void bChangeFunction() {
+    [UsedImplicitly]
+    public void NextFunction() {
         functionName = Functions.NextName(functionName);
+    }
+
+    [UsedImplicitly]
+    public void RandomFunction() {
+        functionName = Functions.RandomNameOtherThan(functionName);
     }
 
     public void bChangeResolution(int delta) {

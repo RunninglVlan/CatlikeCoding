@@ -1,5 +1,6 @@
 ﻿using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public static class Functions {
     public delegate Vector3 Function(float u, float v, float time);
@@ -21,6 +22,11 @@ public static class Functions {
 
     public static Function Get(Name name) => functions[(int)name];
     public static Name NextName(Name current) => (int)current + 1 < functions.Length ? current + 1 : 0;
+
+    public static Name RandomNameOtherThan(Name current) {
+        var random = (Name)Random.Range(1, functions.Length);
+        return current == random ? 0 : random;
+    }
 
     private static Vector3 Sine(float x, float z, float time) {
         var y = Sine(x, time);
