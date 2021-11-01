@@ -63,8 +63,7 @@ public static class Functions {
 
     private static Vector3 Sphere(float u, float v, float time) {
         const float multiplier = 1.3f;
-        var radius = .8f + Sine(6 * u, time) * .1f;
-        radius += Sine(4 * v, time) * .1f;
+        var radius = .9f + Sine(6 * u + 4 * v, time) * .1f;
         var s = radius * Cos(.5f * v);
         return new Vector3(s * Sine(u) * multiplier, radius * Sine(.5f * v) * multiplier, s * Cos(u) * multiplier);
     }
