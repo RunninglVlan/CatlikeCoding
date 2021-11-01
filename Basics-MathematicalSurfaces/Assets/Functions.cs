@@ -70,8 +70,8 @@ public static class Functions {
 
     private static Vector3 Torus(float u, float v, float time) {
         const float multiplier = 1.5f;
-        var radius1 = .65f + Sine(6 * u, time) * .1f;
-        var radius2 = .2f + Sine(4 * v, time) * .05f;
+        var radius1 = .65f + Sine(6 * u, .5f * time) * .1f;
+        var radius2 = .2f + Sine(8 * u + 4 * v, 2 * time) * .05f;
         var s = radius2 * Cos(v) + radius1;
         return new Vector3(s * Sine(u) * multiplier, radius2 * Sine(v) * multiplier, s * Cos(u) * multiplier);
     }
