@@ -1,7 +1,4 @@
 ﻿using NaughtyAttributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Graph : MonoBehaviour {
@@ -12,7 +9,7 @@ public class Graph : MonoBehaviour {
     private int Resolution { set; get; }
     private float Step => 2f / Resolution;
 
-    private Dictionary<(float u, float v), Transform> points = new Dictionary<(float, float), Transform>();
+    private Transform[] points;
 
     void Awake() => Initialize();
 
@@ -21,11 +18,12 @@ public class Graph : MonoBehaviour {
         Resolution = resolution;
         Clear();
         var scale = Vector3.one * Step;
-        IteratePoints((u, v) => {
+        points = new Transform[Resolution * Resolution];
+        for (var index = 0; index < points.Length; index++) {
             var point = Instantiate(pointPrefab, transform);
             point.localScale = scale;
-            points[(u, v)] = point;
-        });
+            points[index] = point;
+        }
 
         void Clear() {
             foreach (Transform point in transform) {
@@ -52,18 +50,13 @@ public class Graph : MonoBehaviour {
     private void Animate() {
         var time = Time.time;
         var function = Functions.Get(functionName);
-        IteratePoints((u, v) => {
-            points[(u, v)].localPosition = function(u, v, time);
-        });
-    }
-
-    private void IteratePoints(Action<float, float> action) {
         var step = Step;
-        foreach (var z in Enumerable.Range(-Resolution / 2, Resolution)) {
+        var index = 0;
+        for (var z = -Resolution / 2; z < Resolution / 2; z++) {
             var v = (z + .5f) * step;
-            foreach (var x in Enumerable.Range(-Resolution / 2, Resolution)) {
+            for (var x = -Resolution / 2; x < Resolution / 2; x++) {
                 var u = (x + .5f) * step;
-                action(u, v);
+                points[index++].localPosition = function(u, v, time);
             }
         }
     }
