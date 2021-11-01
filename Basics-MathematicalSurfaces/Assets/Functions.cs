@@ -28,6 +28,10 @@ public static class Functions {
         return current == random ? 0 : random;
     }
 
+    public static Vector3 Morph(float u, float v, float time, Function from, Function to, float progress) {
+        return Vector3.LerpUnclamped(from(u, v, time), to(u, v, time), math.smoothstep(0, 1, progress));
+    }
+
     private static Vector3 Sine(float x, float z, float time) {
         var y = Sine(x, time);
         return new Vector3(x, y, z);
