@@ -156,6 +156,7 @@ MonoBehaviour:
     type: 3}
   resolution: 50
   functionName: 0
+  transitionDuration: 1
 --- !u!4 &15985243
 Transform:
   m_ObjectHideFlags: 0
@@ -316,7 +317,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 15985242}
         m_TargetAssemblyTypeName: 
-        m_MethodName: bChangeResolution
+        m_MethodName: ChangeResolution
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -449,7 +450,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 15985242}
         m_TargetAssemblyTypeName: 
-        m_MethodName: bChangeResolution
+        m_MethodName: ChangeResolution
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1098,12 +1099,12 @@ PrefabInstance:
     - target: {fileID: 1285366837594882617, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
       propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: bChangeResolution
+      value: ChangeResolution
       objectReference: {fileID: 0}
     - target: {fileID: 1285366837594882617, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
       propertyPath: controls.Array.data[3].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: bChangeResolution
+      value: ChangeResolution
       objectReference: {fileID: 0}
     - target: {fileID: 1285366837594882617, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
@@ -1113,6 +1114,16 @@ PrefabInstance:
     - target: {fileID: 1285366837594882617, guid: 387ab1080e34f444a90fcc694324095c,
         type: 3}
       propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Graph, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285366837594882617, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Graph, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285366837594882617, guid: 387ab1080e34f444a90fcc694324095c,
+        type: 3}
+      propertyPath: controls.Array.data[3].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Graph, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1285366837594882617, guid: 387ab1080e34f444a90fcc694324095c,

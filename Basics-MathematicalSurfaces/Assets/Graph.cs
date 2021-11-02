@@ -1,19 +1,18 @@
-﻿using JetBrains.Annotations;
-using NaughtyAttributes;
+﻿using NaughtyAttributes;
 using UnityEngine;
 
 public class Graph : MonoBehaviour {
-    [SerializeField] Transform pointPrefab = default;
+    [SerializeField] Transform pointPrefab;
     [SerializeField, Range(10, 100)] int resolution = 10;
     [SerializeField] Functions.Name functionName = Functions.Name.Sine;
     [SerializeField] float transitionDuration = 1;
 
-    private int Resolution { set; get; }
-    private float Step => 2f / Resolution;
+    int Resolution { set; get; }
+    float Step => 2f / Resolution;
 
-    private Transform[] points;
-    private Functions.Name previousFunctionName;
-    private float transitionTime;
+    Transform[] points;
+    Functions.Name previousFunctionName;
+    float transitionTime;
 
     void Awake() => Initialize();
 
@@ -36,21 +35,19 @@ public class Graph : MonoBehaviour {
         }
     }
 
-    [UsedImplicitly]
     public void NextFunction() {
         previousFunctionName = functionName;
         functionName = Functions.NextName(functionName);
         transitionTime = transitionDuration;
     }
 
-    [UsedImplicitly]
     public void RandomFunction() {
         previousFunctionName = functionName;
         functionName = Functions.RandomNameOtherThan(functionName);
         transitionTime = transitionDuration;
     }
 
-    public void bChangeResolution(int delta) {
+    public void ChangeResolution(int delta) {
         var newResolution = Mathf.Clamp(resolution + delta, 10, 100);
         if (resolution == newResolution) {
             return;
@@ -61,7 +58,7 @@ public class Graph : MonoBehaviour {
 
     void Update() => Animate();
 
-    private void Animate() {
+    void Animate() {
         var time = Time.time;
         var function = Functions.Get(functionName);
         var transitioning = Transitioning(out var previousFunction, out var transitionProgress);
