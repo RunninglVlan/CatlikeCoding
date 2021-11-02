@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Graph : MonoBehaviour {
     [SerializeField] Transform pointPrefab;
-    [SerializeField, Range(10, 100)] int resolution = 10;
+    [SerializeField, Range(10, 200)] int resolution = 10;
     [SerializeField] Functions.Name functionName = Functions.Name.Sine;
     [SerializeField] float transitionDuration = 1;
 
@@ -48,7 +48,7 @@ public class Graph : MonoBehaviour {
     }
 
     public void ChangeResolution(int delta) {
-        var newResolution = Mathf.Clamp(resolution + delta, 10, 100);
+        var newResolution = Mathf.Clamp(resolution + delta, 10, 200);
         if (resolution == newResolution) {
             return;
         }
