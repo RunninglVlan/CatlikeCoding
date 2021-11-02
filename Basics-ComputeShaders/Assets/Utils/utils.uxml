@@ -1,5 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="utils.uss" />
+    <ui:VisualElement name="controls" />
     <ui:Label text="FPS&#10;000&#10;000&#10;000" name="fps" class="panel" />
     <ui:VisualElement name="info">
         <ui:Button text="i" />

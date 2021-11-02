@@ -14,6 +14,11 @@ Button {
     color: rgb(215, 215, 215);
 }
 
+#controls {
+    position: absolute;
+    align-items: stretch;
+}
+
 #fps {
     position: absolute;
     right: 0;
