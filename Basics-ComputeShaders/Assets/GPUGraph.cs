@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 
 public class GPUGraph : MonoBehaviour {
+    static readonly int POINTS = Shader.PropertyToID("Points");
+    static readonly int RESOLUTION = Shader.PropertyToID("Resolution");
+    static readonly int STEP = Shader.PropertyToID("Step");
+    static readonly int TIME = Shader.PropertyToID("Time");
+
+    [SerializeField] ComputeShader functionsShader;
     [SerializeField, Range(10, 200)] int resolution = 10;
     [SerializeField] Functions.Name functionName = Functions.Name.Sine;
     [SerializeField] float transitionDuration = 1;
@@ -37,6 +43,7 @@ public class GPUGraph : MonoBehaviour {
         if (resolution == newResolution) {
             return;
         }
+
         resolution = newResolution;
     }
 
@@ -55,6 +62,8 @@ public class GPUGraph : MonoBehaviour {
             }
         }
 
+        UpdateShaderProperties();
+
         bool Transitioning(out Functions.Function from, out float progress) {
             from = null;
             var result = transitionTime > 0;
@@ -62,8 +71,20 @@ public class GPUGraph : MonoBehaviour {
                 from = Functions.Get(previousFunctionName);
                 transitionTime -= Time.deltaTime;
             }
+
             progress = (transitionDuration - transitionTime) / transitionDuration;
             return result;
         }
+    }
+
+    void UpdateShaderProperties() {
+        functionsShader.SetInt(RESOLUTION, Resolution);
+        functionsShader.SetFloat(STEP, Step);
+        functionsShader.SetFloat(TIME, Time.time);
+
+        functionsShader.SetBuffer(0, POINTS, pointsBuffer);
+
+        var groups = Mathf.CeilToInt(resolution / 8f);
+        functionsShader.Dispatch(0, groups, groups, 1);
     }
 }
