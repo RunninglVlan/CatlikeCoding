@@ -1,9 +1,19 @@
 #pragma kernel Function
 
+RWStructuredBuffer<float3> Points;
+
+uint Resolution;
+
 float Step;
 
 float2 GetUV(uint3 id) {
     return (id.xy + 0.5) * Step;
+}
+
+void SetPosition(uint3 id, float3 position) {
+    if (id.x < Resolution && id.y < Resolution) {
+        Points[id.x + id.y * Resolution] = position;
+    }
 }
 
 [numthreads(8, 8, 1)]
