@@ -8,8 +8,17 @@ public class GPUGraph : MonoBehaviour {
     int Resolution { set; get; }
     float Step => 2f / Resolution;
 
+    ComputeBuffer pointsBuffer;
     Functions.Name previousFunctionName;
     float transitionTime;
+
+    void Awake() => Initialize();
+
+    void Initialize() {
+        Resolution = resolution;
+        pointsBuffer?.Release();
+        pointsBuffer = new ComputeBuffer(Resolution * Resolution, 3 * 4);
+    }
 
     public void NextFunction() {
         previousFunctionName = functionName;
