@@ -4,7 +4,7 @@ RWStructuredBuffer<float3> Points;
 
 uint Resolution;
 
-float Step;
+float Step, Time;
 
 float2 GetUV(uint3 id) {
     return (id.xy + 0.5) * Step;
@@ -16,6 +16,15 @@ void SetPosition(uint3 id, float3 position) {
     }
 }
 
+#define PI 3.14159265358979323846
+
+float3 Sine(float x, float z, float time) {
+    float y = sin(PI * (x + time));
+    return float3(x, y, z);
+}
+
 [numthreads(8, 8, 1)]
 void Function(uint3 id: SV_DispatchThreadID) {
+    float2 uv = GetUV(id);
+    SetPosition(id, Sine(uv.x, uv.y, Time));
 }
