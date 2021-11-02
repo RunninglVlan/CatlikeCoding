@@ -9,7 +9,7 @@ For [Catlike Coding Unity Tutorials](https://catlikecoding.com/unity/tutorials/)
   <tr>
     <td><a href="https://runninglvlan.github.io/CatlikeCoding/Basics-GameObjectsAndScripts/Page/"><img src="Basics-GameObjectsAndScripts/Page/thumbnail.png" /></a><br>Game Objects and Scripts</td>
     <td><a href="https://runninglvlan.github.io/CatlikeCoding/Basics-BuildingAGraph/Page/"><img src="Basics-BuildingAGraph/Page/thumbnail.png" /></a><br>Building a Graph</td>
-    <td><a href="https://runninglvlan.github.io/CatlikeCoding/Basics-MathematicalSurfaces/Page/"><img src="Basics-MathematicalSurfaces/Page/thumbnail.png" /></a><br>Mathematical Surfaces</td>
+    <td><a href="https://runninglvlan.github.io/CatlikeCoding/Basics-MathematicalSurfaces/Page/"><img src="Basics-MathematicalSurfaces/Page/thumbnail.png" /></a><br>Mathematical Surfaces + Measuring Performance</td>
   </tr>
   <tr>
     <td colspan="3">Miscellaneous</td>
