@@ -1,8 +1,6 @@
-﻿using NaughtyAttributes;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GPUGraph : MonoBehaviour {
-    [SerializeField] Transform pointPrefab;
     [SerializeField, Range(10, 200)] int resolution = 10;
     [SerializeField] Functions.Name functionName = Functions.Name.Sine;
     [SerializeField] float transitionDuration = 1;
@@ -10,30 +8,8 @@ public class GPUGraph : MonoBehaviour {
     int Resolution { set; get; }
     float Step => 2f / Resolution;
 
-    Transform[] points;
     Functions.Name previousFunctionName;
     float transitionTime;
-
-    void Awake() => Initialize();
-
-    [Button]
-    void Initialize() {
-        Resolution = resolution;
-        Clear();
-        var scale = Vector3.one * Step;
-        points = new Transform[Resolution * Resolution];
-        for (var index = 0; index < points.Length; index++) {
-            var point = Instantiate(pointPrefab, transform);
-            point.localScale = scale;
-            points[index] = point;
-        }
-
-        void Clear() {
-            foreach (Transform point in transform) {
-                Destroy(point.gameObject);
-            }
-        }
-    }
 
     public void NextFunction() {
         previousFunctionName = functionName;
@@ -53,7 +29,6 @@ public class GPUGraph : MonoBehaviour {
             return;
         }
         resolution = newResolution;
-        Initialize();
     }
 
     void Update() => Animate();
@@ -68,9 +43,6 @@ public class GPUGraph : MonoBehaviour {
             var v = (z + .5f) * step;
             for (var x = -Resolution / 2; x < Resolution / 2; x++) {
                 var u = (x + .5f) * step;
-                points[index++].localPosition = !transitioning
-                    ? function(u, v, time)
-                    : Functions.Morph(u, v, time, previousFunction, function, transitionProgress);
             }
         }
 
