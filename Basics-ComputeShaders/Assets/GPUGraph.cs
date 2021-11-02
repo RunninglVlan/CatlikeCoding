@@ -7,6 +7,8 @@ public class GPUGraph : MonoBehaviour {
     static readonly int TIME = Shader.PropertyToID("Time");
 
     [SerializeField] ComputeShader functionsShader;
+    [SerializeField] Material material;
+    [SerializeField] Mesh mesh;
     [SerializeField, Range(10, 200)] int resolution = 10;
     [SerializeField] Functions.Name functionName = Functions.Name.Sine;
     [SerializeField] float transitionDuration = 1;
@@ -25,6 +27,8 @@ public class GPUGraph : MonoBehaviour {
         pointsBuffer?.Release();
         pointsBuffer = new ComputeBuffer(Resolution * Resolution, 3 * 4);
     }
+
+    void OnDisable() => pointsBuffer.Release();
 
     public void NextFunction() {
         previousFunctionName = functionName;
@@ -62,7 +66,7 @@ public class GPUGraph : MonoBehaviour {
             }
         }
 
-        UpdateShaderProperties();
+        UpdateFunctionOnGPU();
 
         bool Transitioning(out Functions.Function from, out float progress) {
             from = null;
@@ -77,7 +81,7 @@ public class GPUGraph : MonoBehaviour {
         }
     }
 
-    void UpdateShaderProperties() {
+    void UpdateFunctionOnGPU() {
         functionsShader.SetInt(RESOLUTION, Resolution);
         functionsShader.SetFloat(STEP, Step);
         functionsShader.SetFloat(TIME, Time.time);
@@ -86,5 +90,8 @@ public class GPUGraph : MonoBehaviour {
 
         var groups = Mathf.CeilToInt(resolution / 8f);
         functionsShader.Dispatch(0, groups, groups, 1);
+
+        var bounds = new Bounds(Vector3.zero, Vector3.one * (2f + 2f / Resolution));
+        Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, pointsBuffer.count);
     }
 }
