@@ -1,0 +1,11 @@
+#pragma kernel Function
+
+float Step;
+
+float2 GetUV(uint3 id) {
+    return (id.xy + 0.5) * Step;
+}
+
+[numthreads(8, 8, 1)]
+void Function(uint3 id: SV_DispatchThreadID) {
+}
