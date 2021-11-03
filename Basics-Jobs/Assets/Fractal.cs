@@ -9,6 +9,10 @@ public class Fractal : MonoBehaviour {
         (Vector3.back, Quaternion.Euler(-90, 0, 0))
     };
 
+    const float CHILD_OFFSET = .75f;
+    const float CHILD_SCALE = .5f;
+    const float ROTATION_SPEED = 22.5f;
+
     [SerializeField, Range(1, 8)] int depth = 4;
 
     static readonly Fractal[] children = new Fractal[CHILDREN.Length];
@@ -32,10 +36,12 @@ public class Fractal : MonoBehaviour {
             var child = Instantiate(this);
             child.depth = depth - 1;
             var childTransform = child.transform;
-            childTransform.localPosition = direction * .75f;
-            childTransform.localScale = Vector3.one * .5f;
+            childTransform.localPosition = direction * CHILD_OFFSET;
+            childTransform.localScale = Vector3.one * CHILD_SCALE;
             childTransform.localRotation = orientation;
             return child;
         }
     }
+
+    void Update() => transform.Rotate(0, ROTATION_SPEED * Time.deltaTime, 0);
 }
