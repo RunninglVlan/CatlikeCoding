@@ -49,6 +49,7 @@ public class GPUGraph : MonoBehaviour {
         }
 
         resolution = newResolution;
+        Initialize();
     }
 
     void Update() => Animate();

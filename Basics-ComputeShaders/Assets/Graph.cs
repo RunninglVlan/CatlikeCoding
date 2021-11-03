@@ -49,7 +49,7 @@ public class Graph : MonoBehaviour {
 
     public void ChangeResolution(int delta) {
         var newResolution = Mathf.Clamp(resolution + delta, 10, 200);
-        if (resolution == newResolution) {
+        if (resolution == newResolution || !gameObject.activeInHierarchy) {
             return;
         }
         resolution = newResolution;
