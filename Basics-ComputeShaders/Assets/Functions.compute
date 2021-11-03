@@ -7,7 +7,7 @@ uint Resolution;
 float Step, Time;
 
 float2 GetUV(uint3 id) {
-    return (id.xy + 0.5) * Step;
+    return (id.xy + 0.5) * Step - 1;
 }
 
 void SetPosition(uint3 id, float3 position) {

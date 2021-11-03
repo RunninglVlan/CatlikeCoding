@@ -88,8 +88,11 @@ public class GPUGraph : MonoBehaviour {
 
         functionsShader.SetBuffer(0, POINTS, pointsBuffer);
 
-        var groups = Mathf.CeilToInt(resolution / 8f);
+        var groups = Mathf.CeilToInt(Resolution / 8f);
         functionsShader.Dispatch(0, groups, groups, 1);
+
+        material.SetBuffer(POINTS, pointsBuffer);
+        material.SetFloat(STEP, Step);
 
         var bounds = new Bounds(Vector3.zero, Vector3.one * (2f + 2f / Resolution));
         Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, pointsBuffer.count);

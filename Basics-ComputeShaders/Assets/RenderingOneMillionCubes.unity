@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   functionsShader: {fileID: 7200000, guid: 1cc7f9d185e7d2541861cc4a344f86fb, type: 3}
-  material: {fileID: 2100000, guid: 652652fb4de648ff891381d416c478ea, type: 2}
+  material: {fileID: 2100000, guid: e1b0d455f37c93344bf4f09c468d54aa, type: 2}
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   resolution: 50
   functionName: 0
