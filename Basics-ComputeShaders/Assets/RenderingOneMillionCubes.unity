@@ -248,7 +248,7 @@ MonoBehaviour:
   functionsShader: {fileID: 7200000, guid: 1cc7f9d185e7d2541861cc4a344f86fb, type: 3}
   material: {fileID: 2100000, guid: e1b0d455f37c93344bf4f09c468d54aa, type: 2}
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  resolution: 50
+  resolution: 100
   functionName: 0
   transitionDuration: 1
 --- !u!4 &828846579
@@ -676,7 +676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[3].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
@@ -684,7 +684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[3].onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
-      value: -10
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

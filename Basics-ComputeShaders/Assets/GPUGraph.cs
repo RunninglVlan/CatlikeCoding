@@ -2,6 +2,7 @@
 using UnityEngine;
 
 public class GPUGraph : MonoBehaviour {
+    const int MAX_RESOLUTION = 1000;
     static readonly int POINTS = Shader.PropertyToID("Points");
     static readonly int RESOLUTION = Shader.PropertyToID("Resolution");
     static readonly int STEP = Shader.PropertyToID("Step");
@@ -11,7 +12,7 @@ public class GPUGraph : MonoBehaviour {
     [SerializeField] ComputeShader functionsShader;
     [SerializeField] Material material;
     [SerializeField] Mesh mesh;
-    [SerializeField, Range(10, 200)] int resolution = 10;
+    [SerializeField, Range(10, MAX_RESOLUTION)] int resolution = 10;
     [SerializeField] Functions.Name functionName = Functions.Name.Sine;
     [SerializeField] float transitionDuration = 1;
 
@@ -45,7 +46,7 @@ public class GPUGraph : MonoBehaviour {
     }
 
     public void ChangeResolution(int delta) {
-        var newResolution = Mathf.Clamp(resolution + delta, 10, 200);
+        var newResolution = Mathf.Clamp(resolution + delta, 10, MAX_RESOLUTION);
         if (resolution == newResolution) {
             return;
         }
