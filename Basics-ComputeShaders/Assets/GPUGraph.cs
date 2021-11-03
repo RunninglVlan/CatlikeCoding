@@ -52,37 +52,10 @@ public class GPUGraph : MonoBehaviour {
         Initialize();
     }
 
-    void Update() => Animate();
-
-    void Animate() {
-        var time = Time.time;
-        var function = Functions.Get(functionName);
-        var transitioning = Transitioning(out var previousFunction, out var transitionProgress);
-        var step = Step;
-        var index = 0;
-        for (var z = -Resolution / 2; z < Resolution / 2; z++) {
-            var v = (z + .5f) * step;
-            for (var x = -Resolution / 2; x < Resolution / 2; x++) {
-                var u = (x + .5f) * step;
-            }
-        }
-
-        UpdateFunctionOnGPU();
-
-        bool Transitioning(out Functions.Function from, out float progress) {
-            from = null;
-            var result = transitionTime > 0;
-            if (result) {
-                from = Functions.Get(previousFunctionName);
-                transitionTime -= Time.deltaTime;
-            }
-
-            progress = (transitionDuration - transitionTime) / transitionDuration;
-            return result;
-        }
-    }
+    void Update() => UpdateFunctionOnGPU();
 
     void UpdateFunctionOnGPU() {
+        var transitioning = Transitioning(out var previousFunction, out var transitionProgress);
         functionsShader.SetInt(RESOLUTION, Resolution);
         functionsShader.SetFloat(STEP, Step);
         functionsShader.SetFloat(TIME, Time.time);
@@ -98,5 +71,17 @@ public class GPUGraph : MonoBehaviour {
 
         var bounds = new Bounds(Vector3.zero, Vector3.one * (2f + 2f / Resolution));
         Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, pointsBuffer.count);
+
+        bool Transitioning(out Functions.Function from, out float progress) {
+            from = null;
+            var result = transitionTime > 0;
+            if (result) {
+                from = Functions.Get(previousFunctionName);
+                transitionTime -= Time.deltaTime;
+            }
+
+            progress = (transitionDuration - transitionTime) / transitionDuration;
+            return result;
+        }
     }
 }
