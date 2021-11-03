@@ -14,7 +14,6 @@ public class Fractal : MonoBehaviour {
     const float ROTATION_SPEED = 22.5f;
 
     [SerializeField, Range(1, 8)] int depth = 4;
-    [SerializeField] Transform childPrefab;
 
     Child[][] children;
 
@@ -25,29 +24,22 @@ public class Fractal : MonoBehaviour {
         }
 
         var level = 0;
-        float currentScale = 1;
-        children[level][0] = CreateChild(0, currentScale);
+        children[level][0] = CreateChild(0);
         level++;
         for (; level < children.Length; level++) {
-            currentScale *= CHILD_SCALE;
             var levelParts = children[level];
             for (var part = 0; part < levelParts.Length; part += CHILDREN.Length) {
                 for (var child = 0; child < CHILDREN.Length; child++) {
-                    levelParts[part + child] = CreateChild(child, currentScale);
+                    levelParts[part + child] = CreateChild(child);
                 }
             }
         }
 
-        Child CreateChild(int index, float scale) {
-            var child = Instantiate(childPrefab, transform);
-            child.name = $"Fractal [{level}, {index}]";
-            var childTransform = child.transform;
-            childTransform.localScale = Vector3.one * scale;
+        Child CreateChild(int index) {
             var (direction, orientation) = CHILDREN[index];
             return new Child {
                 direction = direction,
-                rotation = orientation,
-                transform = child
+                rotation = orientation
             };
         }
     }
@@ -57,29 +49,27 @@ public class Fractal : MonoBehaviour {
         var level = 0;
         var root = children[level][0];
         root.rotation *= deltaRotation;
-        root.transform.localRotation = root.rotation;
+        root.worldRotation = root.rotation;
 
         level++;
+        float scale = 1;
         for (; level < children.Length; level++) {
+            scale *= CHILD_SCALE;
             var parents = children[level - 1];
             var levelChildren = children[level];
             for (var index = 0; index < levelChildren.Length; index++) {
-                var parentTransform = parents[index / CHILDREN.Length].transform;
+                var parent = parents[index / CHILDREN.Length];
                 var child = levelChildren[index];
-                var childTransform = child.transform;
-                var parentRotation = parentTransform.localRotation;
                 child.rotation *= deltaRotation;
-                childTransform.localRotation = parentRotation * child.rotation;
-                childTransform.localPosition =
-                    parentTransform.localPosition +
-                    parentRotation * child.direction * (childTransform.localScale.x * CHILD_OFFSET);
+                child.worldRotation = parent.worldRotation * child.rotation;
+                child.worldPosition = parent.worldPosition +
+                                      parent.worldRotation * child.direction * (scale * CHILD_OFFSET);
             }
         }
     }
 
     class Child {
-        public Vector3 direction;
-        public Quaternion rotation;
-        public Transform transform;
+        public Vector3 direction, worldPosition;
+        public Quaternion rotation, worldRotation;
     }
 }
