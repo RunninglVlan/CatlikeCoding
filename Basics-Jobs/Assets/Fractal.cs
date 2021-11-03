@@ -24,19 +24,21 @@ public class Fractal : MonoBehaviour {
             children[index] = new Child[length];
         }
 
+        var level = 0;
         float currentScale = 1;
-        children[0][0] = CreateChild(0, 0, currentScale);
-        for (var level = 1; level < children.Length; level++) {
+        children[level][0] = CreateChild(0, currentScale);
+        level++;
+        for (; level < children.Length; level++) {
             currentScale *= CHILD_SCALE;
             var levelParts = children[level];
             for (var part = 0; part < levelParts.Length; part += CHILDREN.Length) {
                 for (var child = 0; child < CHILDREN.Length; child++) {
-                    levelParts[part + child] = CreateChild(level, child, currentScale);
+                    levelParts[part + child] = CreateChild(child, currentScale);
                 }
             }
         }
 
-        Child CreateChild(int level, int index, float scale) {
+        Child CreateChild(int index, float scale) {
             var child = Instantiate(childPrefab, transform);
             child.name = $"Fractal [{level}, {index}]";
             var childTransform = child.transform;
