@@ -14,34 +14,43 @@ public class Fractal : MonoBehaviour {
     const float ROTATION_SPEED = 22.5f;
 
     [SerializeField, Range(1, 8)] int depth = 4;
+    [SerializeField] Transform childPrefab;
 
-    static readonly Fractal[] children = new Fractal[CHILDREN.Length];
+    Child[][] children;
 
-    void Start() {
-        name = $"Fractal {depth}";
-        if (depth <= 1) {
-            return;
+    void Awake() {
+        children = new Child[depth][];
+        for (int index = 0, length = 1; index < children.Length; index++, length *= CHILDREN.Length) {
+            children[index] = new Child[length];
         }
 
-        for (var index = 0; index < CHILDREN.Length; index++) {
-            var (direction, orientation) = CHILDREN[index];
-            children[index] = CreateChild(direction, orientation);
+        float currentScale = 1;
+        CreateChild(0, 0, currentScale);
+        for (var level = 1; level < children.Length; level++) {
+            currentScale *= CHILD_SCALE;
+            var levelParts = children[level];
+            for (var part = 0; part < levelParts.Length; part += CHILDREN.Length) {
+                for (var child = 0; child < CHILDREN.Length; child++) {
+                    CreateChild(level, child, currentScale);
+                }
+            }
         }
 
-        foreach (var child in children) {
-            child.transform.SetParent(transform, false);
-        }
-
-        Fractal CreateChild(Vector3 direction, Quaternion orientation) {
-            var child = Instantiate(this);
-            child.depth = depth - 1;
+        void CreateChild(int level, int index, float scale /*Vector3 direction, Quaternion orientation*/) {
+            var child = Instantiate(childPrefab, transform);
+            child.name = $"Fractal [{level}, {index}]";
             var childTransform = child.transform;
-            childTransform.localPosition = direction * CHILD_OFFSET;
-            childTransform.localScale = Vector3.one * CHILD_SCALE;
-            childTransform.localRotation = orientation;
-            return child;
+            // childTransform.localPosition = direction * CHILD_OFFSET;
+            childTransform.localScale = Vector3.one * scale;
+            // childTransform.localRotation = orientation;
         }
     }
 
-    void Update() => transform.Rotate(0, ROTATION_SPEED * Time.deltaTime, 0);
+    // void Update() => transform.Rotate(0, ROTATION_SPEED * Time.deltaTime, 0);
+
+    struct Child {
+        public Vector3 direction;
+        public Quaternion orientation;
+        public Transform transform;
+    }
 }
