@@ -87,10 +87,11 @@ public class GPUGraph : MonoBehaviour {
         functionsShader.SetFloat(STEP, Step);
         functionsShader.SetFloat(TIME, Time.time);
 
-        functionsShader.SetBuffer(0, POINTS, pointsBuffer);
+        var kernelIndex = (int)functionName;
+        functionsShader.SetBuffer(kernelIndex, POINTS, pointsBuffer);
 
         var groups = Mathf.CeilToInt(Resolution / 8f);
-        functionsShader.Dispatch(0, groups, groups, 1);
+        functionsShader.Dispatch(kernelIndex, groups, groups, 1);
 
         material.SetBuffer(POINTS, pointsBuffer);
         material.SetFloat(STEP, Step);

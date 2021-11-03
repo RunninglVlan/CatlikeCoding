@@ -1,4 +1,11 @@
-#pragma kernel Function
+#pragma kernel SineKernel
+#pragma kernel Sine2DKernel
+#pragma kernel MultiSineKernel
+#pragma kernel MultiSine2DKernel
+#pragma kernel RippleKernel
+#pragma kernel CylinderKernel
+#pragma kernel SphereKernel
+#pragma kernel TorusKernel
 
 RWStructuredBuffer<float3> Points;
 
@@ -80,8 +87,18 @@ float3 Torus(float u, float v, float time) {
     return float3(s * Sine(u) * multiplier, radius2 * Sine(v) * multiplier, s * Cos(u) * multiplier);
 }
 
-[numthreads(8, 8, 1)]
-void Function(uint3 id: SV_DispatchThreadID) {
-    float2 uv = GetUV(id);
-    SetPosition(id, Sine(uv.x, uv.y, Time));
+#define KERNEL_FUNCTION(function) \
+[numthreads(8, 8, 1)] \
+void function##Kernel(uint3 id: SV_DispatchThreadID) { \
+    float2 uv = GetUV(id); \
+    SetPosition(id, function(uv.x, uv.y, Time)); \
 }
+
+KERNEL_FUNCTION(Sine)
+KERNEL_FUNCTION(Sine2D)
+KERNEL_FUNCTION(MultiSine)
+KERNEL_FUNCTION(MultiSine2D)
+KERNEL_FUNCTION(Ripple)
+KERNEL_FUNCTION(Cylinder)
+KERNEL_FUNCTION(Sphere)
+KERNEL_FUNCTION(Torus)
