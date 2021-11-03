@@ -5,6 +5,8 @@ public class Fractal : MonoBehaviour {
         (Vector3.up, Quaternion.identity),
         (Vector3.right, Quaternion.Euler(0, 0, -90)),
         (Vector3.left, Quaternion.Euler(0, 0, 90)),
+        (Vector3.forward, Quaternion.Euler(90, 0, 0)),
+        (Vector3.back, Quaternion.Euler(-90, 0, 0))
     };
 
     [SerializeField, Range(1, 8)] int depth = 4;
