@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 
 public class GPUGraph : MonoBehaviour {
     static readonly int POINTS = Shader.PropertyToID("Points");
     static readonly int RESOLUTION = Shader.PropertyToID("Resolution");
     static readonly int STEP = Shader.PropertyToID("Step");
     static readonly int TIME = Shader.PropertyToID("Time");
+    static readonly int TRANSITION_PROGRESS = Shader.PropertyToID("TransitionProgress");
 
     [SerializeField] ComputeShader functionsShader;
     [SerializeField] Material material;
@@ -55,12 +57,16 @@ public class GPUGraph : MonoBehaviour {
     void Update() => UpdateFunctionOnGPU();
 
     void UpdateFunctionOnGPU() {
-        var transitioning = Transitioning(out var previousFunction, out var transitionProgress);
+        var transitioning = Transitioning(out var transitionProgress);
         functionsShader.SetInt(RESOLUTION, Resolution);
         functionsShader.SetFloat(STEP, Step);
         functionsShader.SetFloat(TIME, Time.time);
+        if (transitioning) {
+            functionsShader.SetFloat(TRANSITION_PROGRESS, math.smoothstep(0, 1, transitionProgress));
+        }
 
-        var kernelIndex = (int)functionName;
+        var kernelIndex = (int)functionName +
+                          (int)(transitioning ? previousFunctionName : functionName) * Functions.Length;
         functionsShader.SetBuffer(kernelIndex, POINTS, pointsBuffer);
 
         var groups = Mathf.CeilToInt(Resolution / 8f);
@@ -72,11 +78,9 @@ public class GPUGraph : MonoBehaviour {
         var bounds = new Bounds(Vector3.zero, Vector3.one * (2f + 2f / Resolution));
         Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, pointsBuffer.count);
 
-        bool Transitioning(out Functions.Function from, out float progress) {
-            from = null;
+        bool Transitioning(out float progress) {
             var result = transitionTime > 0;
             if (result) {
-                from = Functions.Get(previousFunctionName);
                 transitionTime -= Time.deltaTime;
             }
 

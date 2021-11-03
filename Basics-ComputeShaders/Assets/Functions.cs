@@ -20,6 +20,8 @@ public static class Functions {
         Torus
     }
 
+    public static int Length => functions.Length;
+
     public static Function Get(Name name) => functions[(int)name];
     public static Name NextName(Name current) => (int)current + 1 < functions.Length ? current + 1 : 0;
 

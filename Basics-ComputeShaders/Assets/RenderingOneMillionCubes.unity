@@ -250,7 +250,7 @@ MonoBehaviour:
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   resolution: 50
   functionName: 0
-  transitionDuration: 0
+  transitionDuration: 1
 --- !u!4 &828846579
 Transform:
   m_ObjectHideFlags: 0

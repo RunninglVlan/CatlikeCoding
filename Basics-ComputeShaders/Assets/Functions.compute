@@ -1,17 +1,80 @@
 #pragma kernel SineKernel
+#pragma kernel SineToSine2DKernel
+#pragma kernel SineToMultiSineKernel
+#pragma kernel SineToMultiSine2DKernel
+#pragma kernel SineToRippleKernel
+#pragma kernel SineToCylinderKernel
+#pragma kernel SineToSphereKernel
+#pragma kernel SineToTorusKernel
+
+#pragma kernel Sine2DToSineKernel
 #pragma kernel Sine2DKernel
+#pragma kernel Sine2DToMultiSineKernel
+#pragma kernel Sine2DToMultiSine2DKernel
+#pragma kernel Sine2DToRippleKernel
+#pragma kernel Sine2DToCylinderKernel
+#pragma kernel Sine2DToSphereKernel
+#pragma kernel Sine2DToTorusKernel
+
+#pragma kernel MultiSineToSineKernel
+#pragma kernel MultiSineToSine2DKernel
 #pragma kernel MultiSineKernel
+#pragma kernel MultiSineToMultiSine2DKernel
+#pragma kernel MultiSineToRippleKernel
+#pragma kernel MultiSineToCylinderKernel
+#pragma kernel MultiSineToSphereKernel
+#pragma kernel MultiSineToTorusKernel
+
+#pragma kernel MultiSine2DToSineKernel
+#pragma kernel MultiSine2DToSine2DKernel
+#pragma kernel MultiSine2DToMultiSineKernel
 #pragma kernel MultiSine2DKernel
+#pragma kernel MultiSine2DToRippleKernel
+#pragma kernel MultiSine2DToCylinderKernel
+#pragma kernel MultiSine2DToSphereKernel
+#pragma kernel MultiSine2DToTorusKernel
+
+#pragma kernel RippleToSineKernel
+#pragma kernel RippleToSine2DKernel
+#pragma kernel RippleToMultiSineKernel
+#pragma kernel RippleToMultiSine2DKernel
 #pragma kernel RippleKernel
+#pragma kernel RippleToCylinderKernel
+#pragma kernel RippleToSphereKernel
+#pragma kernel RippleToTorusKernel
+
+#pragma kernel CylinderToSineKernel
+#pragma kernel CylinderToSine2DKernel
+#pragma kernel CylinderToMultiSineKernel
+#pragma kernel CylinderToMultiSine2DKernel
+#pragma kernel CylinderToRippleKernel
 #pragma kernel CylinderKernel
+#pragma kernel CylinderToSphereKernel
+#pragma kernel CylinderToTorusKernel
+
+#pragma kernel SphereToSineKernel
+#pragma kernel SphereToSine2DKernel
+#pragma kernel SphereToMultiSineKernel
+#pragma kernel SphereToMultiSine2DKernel
+#pragma kernel SphereToRippleKernel
+#pragma kernel SphereToCylinderKernel
 #pragma kernel SphereKernel
+#pragma kernel SphereToTorusKernel
+
+#pragma kernel TorusToSineKernel
+#pragma kernel TorusToSine2DKernel
+#pragma kernel TorusToMultiSineKernel
+#pragma kernel TorusToMultiSine2DKernel
+#pragma kernel TorusToRippleKernel
+#pragma kernel TorusToCylinderKernel
+#pragma kernel TorusToSphereKernel
 #pragma kernel TorusKernel
 
 RWStructuredBuffer<float3> Points;
 
 uint Resolution;
 
-float Step, Time;
+float Step, Time, TransitionProgress;
 
 float2 GetUV(uint3 id) {
     return (id.xy + 0.5) * Step - 1;
@@ -94,6 +157,17 @@ void function##Kernel(uint3 id: SV_DispatchThreadID) { \
     SetPosition(id, function(uv.x, uv.y, Time)); \
 }
 
+#define KERNEL_MORPH_FUNCTION(function1, function2) \
+[numthreads(8, 8, 1)] \
+void function1##To##function2##Kernel(uint3 id: SV_DispatchThreadID) { \
+    float2 uv = GetUV(id); \
+    float3 position = lerp( \
+        function1(uv.x, uv.y, Time), function2(uv.x, uv.y, Time), \
+        TransitionProgress \
+    ); \
+    SetPosition(id, position); \
+}
+
 KERNEL_FUNCTION(Sine)
 KERNEL_FUNCTION(Sine2D)
 KERNEL_FUNCTION(MultiSine)
@@ -102,3 +176,67 @@ KERNEL_FUNCTION(Ripple)
 KERNEL_FUNCTION(Cylinder)
 KERNEL_FUNCTION(Sphere)
 KERNEL_FUNCTION(Torus)
+
+KERNEL_MORPH_FUNCTION(Sine, Sine2D)
+KERNEL_MORPH_FUNCTION(Sine, MultiSine)
+KERNEL_MORPH_FUNCTION(Sine, MultiSine2D)
+KERNEL_MORPH_FUNCTION(Sine, Ripple)
+KERNEL_MORPH_FUNCTION(Sine, Cylinder)
+KERNEL_MORPH_FUNCTION(Sine, Sphere)
+KERNEL_MORPH_FUNCTION(Sine, Torus)
+
+KERNEL_MORPH_FUNCTION(Sine2D, Sine)
+KERNEL_MORPH_FUNCTION(Sine2D, MultiSine)
+KERNEL_MORPH_FUNCTION(Sine2D, MultiSine2D)
+KERNEL_MORPH_FUNCTION(Sine2D, Ripple)
+KERNEL_MORPH_FUNCTION(Sine2D, Cylinder)
+KERNEL_MORPH_FUNCTION(Sine2D, Sphere)
+KERNEL_MORPH_FUNCTION(Sine2D, Torus)
+
+KERNEL_MORPH_FUNCTION(MultiSine, Sine)
+KERNEL_MORPH_FUNCTION(MultiSine, Sine2D)
+KERNEL_MORPH_FUNCTION(MultiSine, MultiSine2D)
+KERNEL_MORPH_FUNCTION(MultiSine, Ripple)
+KERNEL_MORPH_FUNCTION(MultiSine, Cylinder)
+KERNEL_MORPH_FUNCTION(MultiSine, Sphere)
+KERNEL_MORPH_FUNCTION(MultiSine, Torus)
+
+KERNEL_MORPH_FUNCTION(MultiSine2D, Sine)
+KERNEL_MORPH_FUNCTION(MultiSine2D, Sine2D)
+KERNEL_MORPH_FUNCTION(MultiSine2D, MultiSine)
+KERNEL_MORPH_FUNCTION(MultiSine2D, Ripple)
+KERNEL_MORPH_FUNCTION(MultiSine2D, Cylinder)
+KERNEL_MORPH_FUNCTION(MultiSine2D, Sphere)
+KERNEL_MORPH_FUNCTION(MultiSine2D, Torus)
+
+KERNEL_MORPH_FUNCTION(Ripple, Sine)
+KERNEL_MORPH_FUNCTION(Ripple, Sine2D)
+KERNEL_MORPH_FUNCTION(Ripple, MultiSine)
+KERNEL_MORPH_FUNCTION(Ripple, MultiSine2D)
+KERNEL_MORPH_FUNCTION(Ripple, Cylinder)
+KERNEL_MORPH_FUNCTION(Ripple, Sphere)
+KERNEL_MORPH_FUNCTION(Ripple, Torus)
+
+KERNEL_MORPH_FUNCTION(Cylinder, Sine)
+KERNEL_MORPH_FUNCTION(Cylinder, Sine2D)
+KERNEL_MORPH_FUNCTION(Cylinder, MultiSine)
+KERNEL_MORPH_FUNCTION(Cylinder, MultiSine2D)
+KERNEL_MORPH_FUNCTION(Cylinder, Ripple)
+KERNEL_MORPH_FUNCTION(Cylinder, Sphere)
+KERNEL_MORPH_FUNCTION(Cylinder, Torus)
+
+KERNEL_MORPH_FUNCTION(Sphere, Sine)
+KERNEL_MORPH_FUNCTION(Sphere, Sine2D)
+KERNEL_MORPH_FUNCTION(Sphere, MultiSine)
+KERNEL_MORPH_FUNCTION(Sphere, MultiSine2D)
+KERNEL_MORPH_FUNCTION(Sphere, Ripple)
+KERNEL_MORPH_FUNCTION(Sphere, Cylinder)
+KERNEL_MORPH_FUNCTION(Sphere, Torus)
+
+KERNEL_MORPH_FUNCTION(Torus, Sine)
+KERNEL_MORPH_FUNCTION(Torus, Sine2D)
+KERNEL_MORPH_FUNCTION(Torus, MultiSine)
+KERNEL_MORPH_FUNCTION(Torus, MultiSine2D)
+KERNEL_MORPH_FUNCTION(Torus, Ripple)
+KERNEL_MORPH_FUNCTION(Torus, Cylinder)
+KERNEL_MORPH_FUNCTION(Torus, Sphere)
