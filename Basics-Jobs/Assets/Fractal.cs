@@ -46,15 +46,21 @@ public class Fractal : MonoBehaviour {
             var (direction, orientation) = CHILDREN[index];
             return new Child {
                 direction = direction,
-                orientation = orientation,
+                rotation = orientation,
                 transform = child
             };
         }
     }
 
     void Update() {
-        // transform.Rotate(0, ROTATION_SPEED * Time.deltaTime, 0);
-        for (var level = 1; level < children.Length; level++) {
+        var deltaRotation = Quaternion.Euler(0, ROTATION_SPEED * Time.deltaTime, 0);
+        var level = 0;
+        var root = children[level][0];
+        root.rotation *= deltaRotation;
+        root.transform.localRotation = root.rotation;
+
+        level++;
+        for (; level < children.Length; level++) {
             var parents = children[level - 1];
             var levelChildren = children[level];
             for (var index = 0; index < levelChildren.Length; index++) {
@@ -62,7 +68,8 @@ public class Fractal : MonoBehaviour {
                 var child = levelChildren[index];
                 var childTransform = child.transform;
                 var parentRotation = parentTransform.localRotation;
-                childTransform.localRotation = parentRotation * child.orientation;
+                child.rotation *= deltaRotation;
+                childTransform.localRotation = parentRotation * child.rotation;
                 childTransform.localPosition =
                     parentTransform.localPosition +
                     parentRotation * child.direction * (childTransform.localScale.x * CHILD_OFFSET);
@@ -70,9 +77,9 @@ public class Fractal : MonoBehaviour {
         }
     }
 
-    struct Child {
+    class Child {
         public Vector3 direction;
-        public Quaternion orientation;
+        public Quaternion rotation;
         public Transform transform;
     }
 }
