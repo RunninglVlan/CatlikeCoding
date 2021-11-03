@@ -18,9 +18,66 @@ void SetPosition(uint3 id, float3 position) {
 
 #define PI 3.14159265358979323846
 
+float Sine(float angle, float time = 0) {
+    return sin(PI * (angle + time));
+}
+
+float Cos(float angle, float time = 0) {
+    return cos(PI * (angle + time));
+}
+
 float3 Sine(float x, float z, float time) {
-    float y = sin(PI * (x + time));
+    float y = Sine(x, time);
     return float3(x, y, z);
+}
+
+float3 Sine2D(float x, float z, float time) {
+    float y = (Sine(x, time) + Sine(z, time)) * .5;
+    return float3(x, y, z);
+}
+
+float3 MultiSine(float x, float z, float time) {
+    float y = Sine(x, time);
+    y += sin(2 * PI * (x + 2 * time)) / 2;
+    y *= 2.0 / 3;
+    return float3(x, y, z);
+}
+
+float3 MultiSine2D(float x, float z, float time) {
+    float y = 4 * sin(PI * (x + z + time * .5));
+    y += Sine(x, time);
+    y += sin(2 * PI * (z + 2 * time)) * .5;
+    y *= 1 / 5.5;
+    return float3(x, y, z);
+}
+
+float3 Ripple(float x, float z, float time) {
+    const float multiplier = 1.3;
+    float distance = sqrt(x * x + z * z);
+    float y = sin(4 * (PI * distance - time));
+    y /= 1 + 10 * distance;
+    return float3(x * multiplier, y, z * multiplier);
+}
+
+float3 Cylinder(float u, float v, float time) {
+    const float multiplier = 1.3;
+    float radius = .8 + Sine(6 * u + 2 * v, time) * .2;
+    return float3(radius * Sine(u) * multiplier, v, radius * Cos(u) * multiplier);
+}
+
+float3 Sphere(float u, float v, float time) {
+    const float multiplier = 1.3;
+    float radius = .9 + Sine(6 * u + 4 * v, time) * .1;
+    float s = radius * Cos(.5 * v);
+    return float3(s * Sine(u) * multiplier, radius * Sine(.5 * v) * multiplier, s * Cos(u) * multiplier);
+}
+
+float3 Torus(float u, float v, float time) {
+    const float multiplier = 1.5;
+    float radius1 = .65 + Sine(6 * u, .5 * time) * .1;
+    float radius2 = .2 + Sine(8 * u + 4 * v, 2 * time) * .05;
+    float s = radius2 * Cos(v) + radius1;
+    return float3(s * Sine(u) * multiplier, radius2 * Sine(v) * multiplier, s * Cos(u) * multiplier);
 }
 
 [numthreads(8, 8, 1)]
