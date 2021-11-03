@@ -137,15 +137,15 @@ float3 Cylinder(float u, float v, float time) {
 
 float3 Sphere(float u, float v, float time) {
     const float multiplier = 1.3;
-    float radius = .9 + Sine(6 * u + 4 * v, time) * .1;
+    float radius = .9 + Sine(12 * u + 8 * v, time) * .1;
     float s = radius * Cos(.5 * v);
     return float3(s * Sine(u) * multiplier, radius * Sine(.5 * v) * multiplier, s * Cos(u) * multiplier);
 }
 
 float3 Torus(float u, float v, float time) {
     const float multiplier = 1.5;
-    float radius1 = .65 + Sine(6 * u, .5 * time) * .1;
-    float radius2 = .2 + Sine(8 * u + 4 * v, 2 * time) * .05;
+    float radius1 = .65 + Sine(8 * u, .5 * time) * .1;
+    float radius2 = .2 + Sine(16 * u + 8 * v, 3 * time) * .05;
     float s = radius2 * Cos(v) + radius1;
     return float3(s * Sine(u) * multiplier, radius2 * Sine(v) * multiplier, s * Cos(u) * multiplier);
 }
