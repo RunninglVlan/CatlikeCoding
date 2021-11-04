@@ -24,20 +24,20 @@ public class Fractal : MonoBehaviour {
     [SerializeField] Material material;
 
     NativeArray<Child>[] children;
-    NativeArray<Matrix4x4>[] matrices;
+    NativeArray<float3x4>[] matrices;
     ComputeBuffer[] matricesBuffers;
     static MaterialPropertyBlock propertyBlock;
 
     void Awake() {
         children = new NativeArray<Child>[depth];
-        matrices = new NativeArray<Matrix4x4>[depth];
+        matrices = new NativeArray<float3x4>[depth];
         matricesBuffers = new ComputeBuffer[depth];
         propertyBlock = new MaterialPropertyBlock();
-        const int matrixSize = sizeof(float) * 16;
+        const int stride = sizeof(float) * 12;
         for (int index = 0, length = 1; index < children.Length; index++, length *= CHILDREN.Length) {
             children[index] = new NativeArray<Child>(length, Allocator.Persistent);
-            matrices[index] = new NativeArray<Matrix4x4>(length, Allocator.Persistent);
-            matricesBuffers[index] = new ComputeBuffer(length, matrixSize);
+            matrices[index] = new NativeArray<float3x4>(length, Allocator.Persistent);
+            matricesBuffers[index] = new ComputeBuffer(length, stride);
         }
 
         var level = 0;
@@ -122,7 +122,7 @@ public class Fractal : MonoBehaviour {
         [ReadOnly] public NativeArray<Child> parents;
         public NativeArray<Child> children;
 
-        [WriteOnly] public NativeArray<Matrix4x4> matrices;
+        [WriteOnly] public NativeArray<float3x4> matrices;
 
         void IJobFor.Execute(int index) {
             var parent = parents[index / childCount];
@@ -136,8 +136,9 @@ public class Fractal : MonoBehaviour {
             matrices[index] = Matrix(child, scale);
         }
 
-        public static Matrix4x4 Matrix(Child child, float scale) {
-            return Matrix4x4.TRS(child.worldPosition, child.worldRotation, math.float3(scale));
+        public static float3x4 Matrix(Child child, float scale) {
+            var rs = math.float3x3(child.worldRotation) * scale;
+            return math.float3x4(rs.c0, rs.c1, rs.c2, child.worldPosition);
         }
     }
 }
