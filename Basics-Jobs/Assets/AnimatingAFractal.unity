@@ -153,7 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 6
-  childPrefab: {fileID: 7396969432507540632, guid: fa940fa01dc936b4795170ae7a344e12, type: 3}
 --- !u!4 &187568134
 Transform:
   m_ObjectHideFlags: 0

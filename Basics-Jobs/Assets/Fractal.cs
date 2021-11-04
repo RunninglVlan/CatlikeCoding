@@ -16,11 +16,14 @@ public class Fractal : MonoBehaviour {
     [SerializeField, Range(1, 8)] int depth = 4;
 
     Child[][] children;
+    Matrix4x4[][] matrices;
 
     void Awake() {
         children = new Child[depth][];
+        matrices = new Matrix4x4[depth][];
         for (int index = 0, length = 1; index < children.Length; index++, length *= CHILDREN.Length) {
             children[index] = new Child[length];
+            matrices[index] = new Matrix4x4[length];
         }
 
         var level = 0;
@@ -45,31 +48,39 @@ public class Fractal : MonoBehaviour {
     }
 
     void Update() {
-        var deltaRotation = Quaternion.Euler(0, ROTATION_SPEED * Time.deltaTime, 0);
+        var spinAngleDelta = ROTATION_SPEED * Time.deltaTime;
         var level = 0;
         var root = children[level][0];
-        root.rotation *= deltaRotation;
-        root.worldRotation = root.rotation;
+        root.spinAngle += spinAngleDelta;
+        root.worldRotation = root.rotation * Quaternion.Euler(0, root.spinAngle, 0);
+        float scale = 1;
+        matrices[level][0] = Matrix(root);
 
         level++;
-        float scale = 1;
         for (; level < children.Length; level++) {
             scale *= CHILD_SCALE;
             var parents = children[level - 1];
             var levelChildren = children[level];
+            var levelMatrices = matrices[level];
             for (var index = 0; index < levelChildren.Length; index++) {
                 var parent = parents[index / CHILDREN.Length];
                 var child = levelChildren[index];
-                child.rotation *= deltaRotation;
-                child.worldRotation = parent.worldRotation * child.rotation;
+                child.spinAngle += spinAngleDelta;
+                child.worldRotation = parent.worldRotation * (child.rotation * Quaternion.Euler(0, child.spinAngle, 0));
                 child.worldPosition = parent.worldPosition +
                                       parent.worldRotation * child.direction * (scale * CHILD_OFFSET);
+                levelMatrices[index] = Matrix(child);
             }
+        }
+
+        Matrix4x4 Matrix(Child child) {
+            return Matrix4x4.TRS(child.worldPosition, child.worldRotation, Vector3.one * scale);
         }
     }
 
     class Child {
         public Vector3 direction, worldPosition;
         public Quaternion rotation, worldRotation;
+        public float spinAngle;
     }
 }
