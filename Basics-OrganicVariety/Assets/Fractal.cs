@@ -24,6 +24,7 @@ public class Fractal : MonoBehaviour {
     [SerializeField, Range(MIN_DEPTH, MAX_DEPTH)] int depth = 4;
     [SerializeField] Mesh mesh;
     [SerializeField] Material material;
+    [SerializeField] Gradient gradient;
 
     NativeArray<Child>[] children;
     NativeArray<float3x4>[] matrices;
@@ -120,8 +121,7 @@ public class Fractal : MonoBehaviour {
             var buffer = matricesBuffers[index];
             buffer.SetData(matrices[index]);
             propertyBlock.SetBuffer(MATRICES, buffer);
-            propertyBlock.SetColor(BASE_COLOR,
-                Color.Lerp(Color.yellow, Color.red, index / (matricesBuffers.Length - 1f)));
+            propertyBlock.SetColor(BASE_COLOR, gradient.Evaluate(index / (matricesBuffers.Length - 1f)));
             Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, buffer.count, propertyBlock);
         }
     }
