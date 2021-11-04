@@ -1,4 +1,5 @@
 using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 public class Fractal : MonoBehaviour {
@@ -76,25 +77,22 @@ public class Fractal : MonoBehaviour {
         root.worldPosition = rootTransform.position;
         children[level][0] = root;
         var scale = rootTransform.lossyScale.x;
-        matrices[level][0] = Matrix(root);
+        matrices[level][0] = UpdateFractalLevelJob.Matrix(root, scale);
 
         level++;
+        JobHandle jobHandle = default;
         for (; level < children.Length; level++) {
             scale *= CHILD_SCALE;
-            var parents = children[level - 1];
-            var levelChildren = children[level];
-            var levelMatrices = matrices[level];
-            for (var index = 0; index < levelChildren.Length; index++) {
-                var parent = parents[index / CHILDREN.Length];
-                var child = levelChildren[index];
-                child.spinAngle += spinAngleDelta;
-                child.worldRotation = parent.worldRotation * (child.rotation * Quaternion.Euler(0, child.spinAngle, 0));
-                child.worldPosition = parent.worldPosition +
-                                      parent.worldRotation * child.direction * (scale * CHILD_OFFSET);
-                levelChildren[index] = child;
-                levelMatrices[index] = Matrix(child);
-            }
+            var job = new UpdateFractalLevelJob {
+                spinAngleDelta = spinAngleDelta,
+                scale = scale,
+                parents = children[level - 1],
+                children = children[level],
+                matrices = matrices[level]
+            };
+            jobHandle = job.Schedule(children[level].Length, jobHandle);
         }
+        jobHandle.Complete();
 
         var bounds = new Bounds(root.worldPosition, 3 * scale * Vector3.one);
         for (var index = 0; index < matricesBuffers.Length; index++) {
@@ -103,15 +101,36 @@ public class Fractal : MonoBehaviour {
             propertyBlock.SetBuffer(MATRICES, buffer);
             Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, buffer.count, propertyBlock);
         }
-
-        Matrix4x4 Matrix(Child child) {
-            return Matrix4x4.TRS(child.worldPosition, child.worldRotation, Vector3.one * scale);
-        }
     }
 
     struct Child {
         public Vector3 direction, worldPosition;
         public Quaternion rotation, worldRotation;
         public float spinAngle;
+    }
+
+    struct UpdateFractalLevelJob : IJobFor {
+        public float spinAngleDelta;
+        public float scale;
+
+        [ReadOnly] public NativeArray<Child> parents;
+        public NativeArray<Child> children;
+
+        [WriteOnly] public NativeArray<Matrix4x4> matrices;
+
+        void IJobFor.Execute(int index) {
+            var parent = parents[index / CHILDREN.Length];
+            var child = children[index];
+            child.spinAngle += spinAngleDelta;
+            child.worldRotation = parent.worldRotation * (child.rotation * Quaternion.Euler(0, child.spinAngle, 0));
+            child.worldPosition = parent.worldPosition +
+                                  parent.worldRotation * child.direction * (scale * CHILD_OFFSET);
+            children[index] = child;
+            matrices[index] = Matrix(child, scale);
+        }
+
+        public static Matrix4x4 Matrix(Child child, float scale) {
+            return Matrix4x4.TRS(child.worldPosition, child.worldRotation, Vector3.one * scale);
+        }
     }
 }
