@@ -68,8 +68,10 @@ public class Fractal : MonoBehaviour {
         var level = 0;
         var root = children[level][0];
         root.spinAngle += spinAngleDelta;
-        root.worldRotation = root.rotation * Quaternion.Euler(0, root.spinAngle, 0);
-        float scale = 1;
+        var rootTransform = transform;
+        root.worldRotation = rootTransform.rotation * (root.rotation * Quaternion.Euler(0, root.spinAngle, 0));
+        root.worldPosition = rootTransform.position;
+        var scale = rootTransform.lossyScale.x;
         matrices[level][0] = Matrix(root);
 
         level++;
@@ -89,7 +91,7 @@ public class Fractal : MonoBehaviour {
             }
         }
 
-        var bounds = new Bounds(Vector3.zero, 3 * Vector3.one);
+        var bounds = new Bounds(root.worldPosition, 3 * scale * Vector3.one);
         for (var index = 0; index < matricesBuffers.Length; index++) {
             var buffer = matricesBuffers[index];
             buffer.SetData(matrices[index]);
