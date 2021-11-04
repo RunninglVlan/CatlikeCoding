@@ -13,16 +13,22 @@ public class Fractal : MonoBehaviour {
     const float CHILD_SCALE = .5f;
     const float ROTATION_SPEED = 22.5f;
 
+    static readonly int MATRICES = Shader.PropertyToID("Matrices");
+
     [SerializeField, Range(1, 8)] int depth = 4;
+    [SerializeField] Mesh mesh;
+    [SerializeField] Material material;
 
     Child[][] children;
     Matrix4x4[][] matrices;
     ComputeBuffer[] matricesBuffers;
+    static MaterialPropertyBlock propertyBlock;
 
     void Awake() {
         children = new Child[depth][];
         matrices = new Matrix4x4[depth][];
         matricesBuffers = new ComputeBuffer[depth];
+        propertyBlock = new MaterialPropertyBlock();
         const int matrixSize = sizeof(float) * 16;
         for (int index = 0, length = 1; index < children.Length; index++, length *= CHILDREN.Length) {
             children[index] = new Child[length];
@@ -83,8 +89,12 @@ public class Fractal : MonoBehaviour {
             }
         }
 
+        var bounds = new Bounds(Vector3.zero, 3 * Vector3.one);
         for (var index = 0; index < matricesBuffers.Length; index++) {
-            matricesBuffers[index].SetData(matrices[index]);
+            var buffer = matricesBuffers[index];
+            buffer.SetData(matrices[index]);
+            propertyBlock.SetBuffer(MATRICES, buffer);
+            Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, buffer.count, propertyBlock);
         }
 
         Matrix4x4 Matrix(Child child) {
