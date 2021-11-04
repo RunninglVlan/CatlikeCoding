@@ -1,3 +1,4 @@
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
@@ -84,6 +85,7 @@ public class Fractal : MonoBehaviour {
         for (; level < children.Length; level++) {
             scale *= CHILD_SCALE;
             var job = new UpdateFractalLevelJob {
+                childCount = CHILDREN.Length,
                 spinAngleDelta = spinAngleDelta,
                 scale = scale,
                 parents = children[level - 1],
@@ -109,7 +111,9 @@ public class Fractal : MonoBehaviour {
         public float spinAngle;
     }
 
+    [BurstCompile]
     struct UpdateFractalLevelJob : IJobFor {
+        public int childCount;
         public float spinAngleDelta;
         public float scale;
 
@@ -119,7 +123,7 @@ public class Fractal : MonoBehaviour {
         [WriteOnly] public NativeArray<Matrix4x4> matrices;
 
         void IJobFor.Execute(int index) {
-            var parent = parents[index / CHILDREN.Length];
+            var parent = parents[index / childCount];
             var child = children[index];
             child.spinAngle += spinAngleDelta;
             child.worldRotation = parent.worldRotation * (child.rotation * Quaternion.Euler(0, child.spinAngle, 0));
