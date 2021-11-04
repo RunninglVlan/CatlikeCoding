@@ -12,10 +12,18 @@ void ConfigureProcedural() {
     #endif
 }
 
-void FractalFunction_float(float3 In, out float3 Out) {
-    Out = In;
+float4 BaseColor;
+
+float4 GetFractalColor() {
+    return BaseColor;
 }
 
-void FractalFunction_half(half3 In, out half3 Out) {
+void FractalFunction_float(float3 In, out float3 Out, out float4 FractalColor) {
     Out = In;
+    FractalColor = GetFractalColor();
+}
+
+void FractalFunction_half(half3 In, out half3 Out, out float4 FractalColor) {
+    Out = In;
+    FractalColor = GetFractalColor();
 }
