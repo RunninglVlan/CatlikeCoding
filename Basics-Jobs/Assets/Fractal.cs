@@ -17,13 +17,17 @@ public class Fractal : MonoBehaviour {
 
     Child[][] children;
     Matrix4x4[][] matrices;
+    ComputeBuffer[] matricesBuffers;
 
     void Awake() {
         children = new Child[depth][];
         matrices = new Matrix4x4[depth][];
+        matricesBuffers = new ComputeBuffer[depth];
+        const int matrixSize = sizeof(float) * 16;
         for (int index = 0, length = 1; index < children.Length; index++, length *= CHILDREN.Length) {
             children[index] = new Child[length];
             matrices[index] = new Matrix4x4[length];
+            matricesBuffers[index] = new ComputeBuffer(length, matrixSize);
         }
 
         var level = 0;
@@ -44,6 +48,12 @@ public class Fractal : MonoBehaviour {
                 direction = direction,
                 rotation = orientation
             };
+        }
+    }
+
+    void OnDisable() {
+        foreach (var buffer in matricesBuffers) {
+            buffer.Release();
         }
     }
 
@@ -71,6 +81,10 @@ public class Fractal : MonoBehaviour {
                                       parent.worldRotation * child.direction * (scale * CHILD_OFFSET);
                 levelMatrices[index] = Matrix(child);
             }
+        }
+
+        for (var index = 0; index < matricesBuffers.Length; index++) {
+            matricesBuffers[index].SetData(matrices[index]);
         }
 
         Matrix4x4 Matrix(Child child) {
