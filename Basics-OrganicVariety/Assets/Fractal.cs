@@ -13,14 +13,15 @@ public class Fractal : MonoBehaviour {
         (math.back(), quaternion.RotateX(-.5f * math.PI))
     };
 
-    const int MAX_DEPTH = 8;
+    const int MIN_DEPTH = 2, MAX_DEPTH = 8;
     const float CHILD_OFFSET = 1.5f;
     const float CHILD_SCALE = .5f;
     const float ROTATION_SPEED = .125f * math.PI;
 
     static readonly int MATRICES = Shader.PropertyToID("Matrices");
+    static readonly int BASE_COLOR = Shader.PropertyToID("BaseColor");
 
-    [SerializeField, Range(1, MAX_DEPTH)] int depth = 4;
+    [SerializeField, Range(MIN_DEPTH, MAX_DEPTH)] int depth = 4;
     [SerializeField] Mesh mesh;
     [SerializeField] Material material;
 
@@ -65,7 +66,7 @@ public class Fractal : MonoBehaviour {
     }
 
     public void ChangeDepth(int delta) {
-        var newDepth = Mathf.Clamp(depth + delta, 1, MAX_DEPTH);
+        var newDepth = Mathf.Clamp(depth + delta, MIN_DEPTH, MAX_DEPTH);
         if (depth == newDepth) {
             return;
         }
@@ -119,6 +120,7 @@ public class Fractal : MonoBehaviour {
             var buffer = matricesBuffers[index];
             buffer.SetData(matrices[index]);
             propertyBlock.SetBuffer(MATRICES, buffer);
+            propertyBlock.SetColor(BASE_COLOR, Color.white * (index / (matricesBuffers.Length - 1f)));
             Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, buffer.count, propertyBlock);
         }
     }

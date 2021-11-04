@@ -378,6 +378,82 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[0].text
+      value: Increase depth
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[1].text
+      value: Decrease depth
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2125408830}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2125408830}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeDepth
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeDepth
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Fractal, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Fractal, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7773090918504997578, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: link
       value: https://catlikecoding.com/unity/tutorials/basics/organic-variety/
