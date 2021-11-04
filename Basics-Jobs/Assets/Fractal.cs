@@ -1,3 +1,4 @@
+using Unity.Collections;
 using UnityEngine;
 
 public class Fractal : MonoBehaviour {
@@ -19,20 +20,20 @@ public class Fractal : MonoBehaviour {
     [SerializeField] Mesh mesh;
     [SerializeField] Material material;
 
-    Child[][] children;
-    Matrix4x4[][] matrices;
+    NativeArray<Child>[] children;
+    NativeArray<Matrix4x4>[] matrices;
     ComputeBuffer[] matricesBuffers;
     static MaterialPropertyBlock propertyBlock;
 
     void Awake() {
-        children = new Child[depth][];
-        matrices = new Matrix4x4[depth][];
+        children = new NativeArray<Child>[depth];
+        matrices = new NativeArray<Matrix4x4>[depth];
         matricesBuffers = new ComputeBuffer[depth];
         propertyBlock = new MaterialPropertyBlock();
         const int matrixSize = sizeof(float) * 16;
         for (int index = 0, length = 1; index < children.Length; index++, length *= CHILDREN.Length) {
-            children[index] = new Child[length];
-            matrices[index] = new Matrix4x4[length];
+            children[index] = new NativeArray<Child>(length, Allocator.Persistent);
+            matrices[index] = new NativeArray<Matrix4x4>(length, Allocator.Persistent);
             matricesBuffers[index] = new ComputeBuffer(length, matrixSize);
         }
 
@@ -58,8 +59,10 @@ public class Fractal : MonoBehaviour {
     }
 
     void OnDisable() {
-        foreach (var buffer in matricesBuffers) {
-            buffer.Release();
+        for (var index = 0; index < matricesBuffers.Length; index++) {
+            matricesBuffers[index].Release();
+            children[index].Dispose();
+            matrices[index].Dispose();
         }
     }
 
@@ -71,6 +74,7 @@ public class Fractal : MonoBehaviour {
         var rootTransform = transform;
         root.worldRotation = rootTransform.rotation * (root.rotation * Quaternion.Euler(0, root.spinAngle, 0));
         root.worldPosition = rootTransform.position;
+        children[level][0] = root;
         var scale = rootTransform.lossyScale.x;
         matrices[level][0] = Matrix(root);
 
@@ -87,6 +91,7 @@ public class Fractal : MonoBehaviour {
                 child.worldRotation = parent.worldRotation * (child.rotation * Quaternion.Euler(0, child.spinAngle, 0));
                 child.worldPosition = parent.worldPosition +
                                       parent.worldRotation * child.direction * (scale * CHILD_OFFSET);
+                levelChildren[index] = child;
                 levelMatrices[index] = Matrix(child);
             }
         }
@@ -104,7 +109,7 @@ public class Fractal : MonoBehaviour {
         }
     }
 
-    class Child {
+    struct Child {
         public Vector3 direction, worldPosition;
         public Quaternion rotation, worldRotation;
         public float spinAngle;
