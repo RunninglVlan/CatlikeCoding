@@ -13,7 +13,7 @@ For [Catlike Coding Unity Tutorials](https://catlikecoding.com/unity/tutorials/)
   </tr>
   <tr>
     <td><a href="https://runninglvlan.github.io/CatlikeCoding/Basics-ComputeShaders/Page/Build.zip"><img src="Basics-ComputeShaders/Page/thumbnail.png" /></a><br>Compute Shaders</td>
-    <td><a href="https://runninglvlan.github.io/CatlikeCoding/Basics-Jobs/Page/Build.zip"><img src="Basics-Jobs/Page/thumbnail.png" /></a><br>Compute Shaders</td>
+    <td><a href="https://runninglvlan.github.io/CatlikeCoding/Basics-Jobs/Page/Build.zip"><img src="Basics-Jobs/Page/thumbnail.png" /></a><br>Jobs</td>
   </tr>
   <tr>
     <td colspan="3">Miscellaneous</td>
