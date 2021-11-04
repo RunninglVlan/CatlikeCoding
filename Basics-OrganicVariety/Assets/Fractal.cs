@@ -120,7 +120,8 @@ public class Fractal : MonoBehaviour {
             var buffer = matricesBuffers[index];
             buffer.SetData(matrices[index]);
             propertyBlock.SetBuffer(MATRICES, buffer);
-            propertyBlock.SetColor(BASE_COLOR, Color.white * (index / (matricesBuffers.Length - 1f)));
+            propertyBlock.SetColor(BASE_COLOR,
+                Color.Lerp(Color.yellow, Color.red, index / (matricesBuffers.Length - 1f)));
             Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, buffer.count, propertyBlock);
         }
     }
