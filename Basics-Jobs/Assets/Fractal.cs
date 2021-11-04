@@ -13,13 +13,14 @@ public class Fractal : MonoBehaviour {
         (math.back(), quaternion.RotateX(-.5f * math.PI))
     };
 
+    const int MAX_DEPTH = 8;
     const float CHILD_OFFSET = 1.5f;
     const float CHILD_SCALE = .5f;
     const float ROTATION_SPEED = .125f * math.PI;
 
     static readonly int MATRICES = Shader.PropertyToID("Matrices");
 
-    [SerializeField, Range(1, 8)] int depth = 4;
+    [SerializeField, Range(1, MAX_DEPTH)] int depth = 4;
     [SerializeField] Mesh mesh;
     [SerializeField] Material material;
 
@@ -28,7 +29,9 @@ public class Fractal : MonoBehaviour {
     ComputeBuffer[] matricesBuffers;
     static MaterialPropertyBlock propertyBlock;
 
-    void Awake() {
+    void Awake() => Initialize();
+
+    void Initialize() {
         children = new NativeArray<Child>[depth];
         matrices = new NativeArray<float3x4>[depth];
         matricesBuffers = new ComputeBuffer[depth];
@@ -61,7 +64,20 @@ public class Fractal : MonoBehaviour {
         }
     }
 
-    void OnDisable() {
+    public void ChangeDepth(int delta) {
+        var newDepth = Mathf.Clamp(depth + delta, 1, MAX_DEPTH);
+        if (depth == newDepth) {
+            return;
+        }
+
+        depth = newDepth;
+        ClearGarbage();
+        Initialize();
+    }
+
+    void OnDisable() => ClearGarbage();
+
+    void ClearGarbage() {
         for (var index = 0; index < matricesBuffers.Length; index++) {
             matricesBuffers[index].Release();
             children[index].Dispose();
