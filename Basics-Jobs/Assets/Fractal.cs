@@ -21,9 +21,11 @@ public class Fractal : MonoBehaviour {
     static readonly int MATRICES = Shader.PropertyToID("Matrices");
 
     [SerializeField, Range(1, MAX_DEPTH)] int depth = 4;
-    [SerializeField] Mesh mesh;
+    [SerializeField] Mesh[] meshes;
     [SerializeField] Material material;
 
+    int currentMesh;
+    Mesh mesh;
     NativeArray<Child>[] children;
     NativeArray<float3x4>[] matrices;
     ComputeBuffer[] matricesBuffers;
@@ -32,6 +34,7 @@ public class Fractal : MonoBehaviour {
     void Awake() => Initialize();
 
     void Initialize() {
+        mesh = meshes[currentMesh];
         children = new NativeArray<Child>[depth];
         matrices = new NativeArray<float3x4>[depth];
         matricesBuffers = new ComputeBuffer[depth];
@@ -71,6 +74,12 @@ public class Fractal : MonoBehaviour {
         }
 
         depth = newDepth;
+        ClearGarbage();
+        Initialize();
+    }
+
+    public void ChangeMesh() {
+        currentMesh = currentMesh + 1 > meshes.Length - 1 ? 0 : currentMesh + 1;
         ClearGarbage();
         Initialize();
     }

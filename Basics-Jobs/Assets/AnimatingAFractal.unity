@@ -153,7 +153,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 7
-  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  meshes:
+  - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   material: {fileID: 2100000, guid: 7324a3193e948494884a0c87e21a892c, type: 2}
 --- !u!4 &187568134
 Transform:
@@ -426,7 +428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[0].text
@@ -437,11 +439,19 @@ PrefabInstance:
       value: Decrease depth
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[2].text
+      value: Change mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
@@ -453,11 +463,19 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 187568131}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 187568131}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 187568131}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
@@ -469,6 +487,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ChangeDepth
       objectReference: {fileID: 0}
@@ -477,11 +499,19 @@ PrefabInstance:
       value: ChangeDepth
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Fractal, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Fractal, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Fractal, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
@@ -493,11 +523,19 @@ PrefabInstance:
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[0].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
       propertyPath: controls.Array.data[1].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274709526179662315, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
+      propertyPath: controls.Array.data[2].onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7773090918504997578, guid: d7720c688037d2f4ca9a4ba27dd7ca97, type: 3}
