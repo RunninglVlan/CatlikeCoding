@@ -1,20 +1,21 @@
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Fractal : MonoBehaviour {
-    static readonly (Vector3 direction, Quaternion orientation)[] CHILDREN = {
-        (Vector3.up, Quaternion.identity),
-        (Vector3.right, Quaternion.Euler(0, 0, -90)),
-        (Vector3.left, Quaternion.Euler(0, 0, 90)),
-        (Vector3.forward, Quaternion.Euler(90, 0, 0)),
-        (Vector3.back, Quaternion.Euler(-90, 0, 0))
+    static readonly (float3 direction, quaternion rotation)[] CHILDREN = {
+        (math.up(), quaternion.identity),
+        (math.right(), quaternion.RotateZ(-.5f * math.PI)),
+        (math.left(), quaternion.RotateZ(.5f * math.PI)),
+        (math.forward(), quaternion.RotateX(.5f * math.PI)),
+        (math.back(), quaternion.RotateX(-.5f * math.PI))
     };
 
     const float CHILD_OFFSET = 1.5f;
     const float CHILD_SCALE = .5f;
-    const float ROTATION_SPEED = 22.5f;
+    const float ROTATION_SPEED = .125f * math.PI;
 
     static readonly int MATRICES = Shader.PropertyToID("Matrices");
 
@@ -52,10 +53,10 @@ public class Fractal : MonoBehaviour {
         }
 
         Child CreateChild(int index) {
-            var (direction, orientation) = CHILDREN[index];
+            var (direction, rotation) = CHILDREN[index];
             return new Child {
                 direction = direction,
-                rotation = orientation
+                rotation = rotation
             };
         }
     }
@@ -74,7 +75,8 @@ public class Fractal : MonoBehaviour {
         var root = children[level][0];
         root.spinAngle += spinAngleDelta;
         var rootTransform = transform;
-        root.worldRotation = rootTransform.rotation * (root.rotation * Quaternion.Euler(0, root.spinAngle, 0));
+        root.worldRotation =
+            math.mul(rootTransform.rotation, math.mul(root.rotation, quaternion.RotateY(root.spinAngle)));
         root.worldPosition = rootTransform.position;
         children[level][0] = root;
         var scale = rootTransform.lossyScale.x;
@@ -106,12 +108,12 @@ public class Fractal : MonoBehaviour {
     }
 
     struct Child {
-        public Vector3 direction, worldPosition;
-        public Quaternion rotation, worldRotation;
+        public float3 direction, worldPosition;
+        public quaternion rotation, worldRotation;
         public float spinAngle;
     }
 
-    [BurstCompile]
+    [BurstCompile(FloatPrecision.Standard, FloatMode.Fast)]
     struct UpdateFractalLevelJob : IJobFor {
         public int childCount;
         public float spinAngleDelta;
@@ -126,15 +128,16 @@ public class Fractal : MonoBehaviour {
             var parent = parents[index / childCount];
             var child = children[index];
             child.spinAngle += spinAngleDelta;
-            child.worldRotation = parent.worldRotation * (child.rotation * Quaternion.Euler(0, child.spinAngle, 0));
+            child.worldRotation = math.mul(parent.worldRotation,
+                math.mul(child.rotation, quaternion.RotateY(child.spinAngle)));
             child.worldPosition = parent.worldPosition +
-                                  parent.worldRotation * child.direction * (scale * CHILD_OFFSET);
+                                  math.mul(parent.worldRotation, child.direction * (scale * CHILD_OFFSET));
             children[index] = child;
             matrices[index] = Matrix(child, scale);
         }
 
         public static Matrix4x4 Matrix(Child child, float scale) {
-            return Matrix4x4.TRS(child.worldPosition, child.worldRotation, Vector3.one * scale);
+            return Matrix4x4.TRS(child.worldPosition, child.worldRotation, math.float3(scale));
         }
     }
 }
