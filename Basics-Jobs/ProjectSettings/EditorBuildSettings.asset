@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/AnimatingAFractal.unity
+    guid: 18c3c4aaa12aaa045a922efab8d8548b
   m_configObjects: {}
