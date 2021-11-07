@@ -14,7 +14,7 @@ public class Fractal : MonoBehaviour {
         (math.back(), quaternion.RotateX(-.5f * math.PI))
     };
 
-    const int MIN_DEPTH = 2, MAX_DEPTH = 8;
+    const int MIN_DEPTH = 3, MAX_DEPTH = 8;
     const float CHILD_OFFSET = 1.5f;
     const float CHILD_SCALE = .5f;
     const float ROTATION_SPEED = .125f * math.PI;
@@ -28,6 +28,7 @@ public class Fractal : MonoBehaviour {
     [SerializeField] Mesh mesh;
     [SerializeField] Material material;
     [SerializeField] Gradient gradient1, gradient2;
+    [SerializeField] Color leafColor1, leafColor2;
 
     NativeArray<Child>[] children;
     NativeArray<float3x4>[] matrices;
@@ -123,13 +124,22 @@ public class Fractal : MonoBehaviour {
         jobHandle.Complete();
 
         var bounds = new Bounds(root.worldPosition, 3 * scale * Vector3.one);
+        var leafIndex = matricesBuffers.Length - 1;
         for (var index = 0; index < matricesBuffers.Length; index++) {
             var buffer = matricesBuffers[index];
             buffer.SetData(matrices[index]);
             propertyBlock.SetBuffer(MATRICES, buffer);
-            var gradientInterpolator = index / (matricesBuffers.Length - 1f);
-            propertyBlock.SetColor(COLOR_1, gradient1.Evaluate(gradientInterpolator));
-            propertyBlock.SetColor(COLOR_2, gradient2.Evaluate(gradientInterpolator));
+            Color color1, color2;
+            if (index == leafIndex) {
+                color1 = leafColor1;
+                color2 = leafColor2;
+            } else {
+                var gradientInterpolator = index / (matricesBuffers.Length - 2f);
+                color1 = gradient1.Evaluate(gradientInterpolator);
+                color2 = gradient2.Evaluate(gradientInterpolator);
+            }
+            propertyBlock.SetColor(COLOR_1, color1);
+            propertyBlock.SetColor(COLOR_2, color2);
             propertyBlock.SetVector(SEQUENCE_NUMBERS, sequenceNumbers[index]);
             Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, buffer.count, propertyBlock);
         }
