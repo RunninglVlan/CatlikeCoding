@@ -20,13 +20,14 @@ public class Fractal : MonoBehaviour {
     const float ROTATION_SPEED = .125f * math.PI;
 
     static readonly int MATRICES = Shader.PropertyToID("Matrices");
-    static readonly int BASE_COLOR = Shader.PropertyToID("BaseColor");
+    static readonly int COLOR_1 = Shader.PropertyToID("Color1");
+    static readonly int COLOR_2 = Shader.PropertyToID("Color2");
     static readonly int SEQUENCE_NUMBERS = Shader.PropertyToID("SequenceNumbers");
 
     [SerializeField, Range(MIN_DEPTH, MAX_DEPTH)] int depth = 4;
     [SerializeField] Mesh mesh;
     [SerializeField] Material material;
-    [SerializeField] Gradient gradient;
+    [SerializeField] Gradient gradient1, gradient2;
 
     NativeArray<Child>[] children;
     NativeArray<float3x4>[] matrices;
@@ -126,7 +127,9 @@ public class Fractal : MonoBehaviour {
             var buffer = matricesBuffers[index];
             buffer.SetData(matrices[index]);
             propertyBlock.SetBuffer(MATRICES, buffer);
-            propertyBlock.SetColor(BASE_COLOR, gradient.Evaluate(index / (matricesBuffers.Length - 1f)));
+            var gradientInterpolator = index / (matricesBuffers.Length - 1f);
+            propertyBlock.SetColor(COLOR_1, gradient1.Evaluate(gradientInterpolator));
+            propertyBlock.SetColor(COLOR_2, gradient2.Evaluate(gradientInterpolator));
             propertyBlock.SetVector(SEQUENCE_NUMBERS, sequenceNumbers[index]);
             Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, buffer.count, propertyBlock);
         }
