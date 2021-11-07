@@ -3,6 +3,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Fractal : MonoBehaviour {
     static readonly (float3 direction, quaternion rotation)[] CHILDREN = {
@@ -20,6 +21,7 @@ public class Fractal : MonoBehaviour {
 
     static readonly int MATRICES = Shader.PropertyToID("Matrices");
     static readonly int BASE_COLOR = Shader.PropertyToID("BaseColor");
+    static readonly int SEQUENCE_NUMBERS = Shader.PropertyToID("SequenceNumbers");
 
     [SerializeField, Range(MIN_DEPTH, MAX_DEPTH)] int depth = 4;
     [SerializeField] Mesh mesh;
@@ -29,6 +31,7 @@ public class Fractal : MonoBehaviour {
     NativeArray<Child>[] children;
     NativeArray<float3x4>[] matrices;
     ComputeBuffer[] matricesBuffers;
+    Vector2[] sequenceNumbers;
     static MaterialPropertyBlock propertyBlock;
 
     void Awake() => Initialize();
@@ -37,12 +40,14 @@ public class Fractal : MonoBehaviour {
         children = new NativeArray<Child>[depth];
         matrices = new NativeArray<float3x4>[depth];
         matricesBuffers = new ComputeBuffer[depth];
+        sequenceNumbers = new Vector2[depth];
         propertyBlock = new MaterialPropertyBlock();
         const int stride = sizeof(float) * 12;
         for (int index = 0, length = 1; index < children.Length; index++, length *= CHILDREN.Length) {
             children[index] = new NativeArray<Child>(length, Allocator.Persistent);
             matrices[index] = new NativeArray<float3x4>(length, Allocator.Persistent);
             matricesBuffers[index] = new ComputeBuffer(length, stride);
+            sequenceNumbers[index] = new Vector2(Random.value, Random.value);
         }
 
         var level = 0;
@@ -122,6 +127,7 @@ public class Fractal : MonoBehaviour {
             buffer.SetData(matrices[index]);
             propertyBlock.SetBuffer(MATRICES, buffer);
             propertyBlock.SetColor(BASE_COLOR, gradient.Evaluate(index / (matricesBuffers.Length - 1f)));
+            propertyBlock.SetVector(SEQUENCE_NUMBERS, sequenceNumbers[index]);
             Graphics.DrawMeshInstancedProcedural(mesh, 0, material, bounds, buffer.count, propertyBlock);
         }
     }
