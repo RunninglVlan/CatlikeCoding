@@ -31,6 +31,7 @@ public class Fractal : MonoBehaviour {
     [SerializeField] Color leafColor1, leafColor2;
     [SerializeField, MinMaxSlider(0, 90)] Vector2 maxSagAngle = new Vector2(15, 25);
     [SerializeField, MinMaxSlider(0, 90)] Vector2 spinSpeed = new Vector2(20, 25);
+    [SerializeField, Range(0, 1)] float reverseSpinChance = .25f;
 
     NativeArray<Child>[] children;
     NativeArray<float3x4>[] matrices;
@@ -67,10 +68,11 @@ public class Fractal : MonoBehaviour {
         }
 
         Child CreateChild(int index) {
+            var spinDirection = Random.value < reverseSpinChance ? -1 : 1;
             return new Child {
                 rotation = CHILD_ROTATION[index],
                 maxSagAngle = math.radians(Random.Range(maxSagAngle.x, maxSagAngle.y)),
-                spinSpeed = math.radians(Random.Range(spinSpeed.x, spinSpeed.y))
+                spinSpeed = spinDirection * math.radians(Random.Range(spinSpeed.x, spinSpeed.y))
             };
         }
     }
