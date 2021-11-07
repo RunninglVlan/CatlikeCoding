@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
@@ -29,6 +30,7 @@ public class Fractal : MonoBehaviour {
     [SerializeField] Material material;
     [SerializeField] Gradient gradient1, gradient2;
     [SerializeField] Color leafColor1, leafColor2;
+    [SerializeField, MinMaxSlider(0, 90)] Vector2 maxSagAngle = new Vector2(15, 25);
 
     NativeArray<Child>[] children;
     NativeArray<float3x4>[] matrices;
@@ -66,7 +68,8 @@ public class Fractal : MonoBehaviour {
 
         Child CreateChild(int index) {
             return new Child {
-                rotation = CHILD_ROTATION[index]
+                rotation = CHILD_ROTATION[index],
+                maxSagAngle = math.radians(Random.Range(maxSagAngle.x, maxSagAngle.y))
             };
         }
     }
@@ -151,7 +154,7 @@ public class Fractal : MonoBehaviour {
     struct Child {
         public float3 worldPosition;
         public quaternion rotation, worldRotation;
-        public float spinAngle;
+        public float maxSagAngle, spinAngle;
     }
 
     [BurstCompile(FloatPrecision.Standard, FloatMode.Fast)]
@@ -160,7 +163,7 @@ public class Fractal : MonoBehaviour {
         public float spinAngleDelta;
         public float scale;
 
-        [ReadOnly] public NativeArray<Child> parents;
+        [Unity.Collections.ReadOnly] public NativeArray<Child> parents;
         public NativeArray<Child> children;
 
         [WriteOnly] public NativeArray<float3x4> matrices;
@@ -176,7 +179,7 @@ public class Fractal : MonoBehaviour {
             quaternion baseRotation;
             if (sagMagnitude > 0) {
                 sagAxis /= sagMagnitude;
-                var sagRotation = quaternion.AxisAngle(sagAxis, math.PI * .25f * sagMagnitude);
+                var sagRotation = quaternion.AxisAngle(sagAxis, child.maxSagAngle * sagMagnitude);
                 baseRotation = math.mul(sagRotation, parent.worldRotation);
             } else {
                 baseRotation = parent.worldRotation;
