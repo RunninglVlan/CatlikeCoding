@@ -6,12 +6,12 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Fractal : MonoBehaviour {
-    static readonly (float3 direction, quaternion rotation)[] CHILDREN = {
-        (math.up(), quaternion.identity),
-        (math.right(), quaternion.RotateZ(-.5f * math.PI)),
-        (math.left(), quaternion.RotateZ(.5f * math.PI)),
-        (math.forward(), quaternion.RotateX(.5f * math.PI)),
-        (math.back(), quaternion.RotateX(-.5f * math.PI))
+    static readonly quaternion[] CHILD_ROTATION = {
+        quaternion.identity,
+        quaternion.RotateZ(-.5f * math.PI),
+        quaternion.RotateZ(.5f * math.PI),
+        quaternion.RotateX(.5f * math.PI),
+        quaternion.RotateX(-.5f * math.PI)
     };
 
     const int MIN_DEPTH = 3, MAX_DEPTH = 8;
@@ -45,7 +45,7 @@ public class Fractal : MonoBehaviour {
         sequenceNumbers = new Vector4[depth];
         propertyBlock = new MaterialPropertyBlock();
         const int stride = sizeof(float) * 12;
-        for (int index = 0, length = 1; index < children.Length; index++, length *= CHILDREN.Length) {
+        for (int index = 0, length = 1; index < children.Length; index++, length *= CHILD_ROTATION.Length) {
             children[index] = new NativeArray<Child>(length, Allocator.Persistent);
             matrices[index] = new NativeArray<float3x4>(length, Allocator.Persistent);
             matricesBuffers[index] = new ComputeBuffer(length, stride);
@@ -57,18 +57,16 @@ public class Fractal : MonoBehaviour {
         level++;
         for (; level < children.Length; level++) {
             var levelParts = children[level];
-            for (var part = 0; part < levelParts.Length; part += CHILDREN.Length) {
-                for (var child = 0; child < CHILDREN.Length; child++) {
+            for (var part = 0; part < levelParts.Length; part += CHILD_ROTATION.Length) {
+                for (var child = 0; child < CHILD_ROTATION.Length; child++) {
                     levelParts[part + child] = CreateChild(child);
                 }
             }
         }
 
         Child CreateChild(int index) {
-            var (direction, rotation) = CHILDREN[index];
             return new Child {
-                direction = direction,
-                rotation = rotation
+                rotation = CHILD_ROTATION[index]
             };
         }
     }
@@ -112,7 +110,7 @@ public class Fractal : MonoBehaviour {
         for (; level < children.Length; level++) {
             scale *= CHILD_SCALE;
             var job = new UpdateFractalLevelJob {
-                childCount = CHILDREN.Length,
+                childCount = CHILD_ROTATION.Length,
                 spinAngleDelta = spinAngleDelta,
                 scale = scale,
                 parents = children[level - 1],
@@ -129,6 +127,7 @@ public class Fractal : MonoBehaviour {
             var buffer = matricesBuffers[index];
             buffer.SetData(matrices[index]);
             propertyBlock.SetBuffer(MATRICES, buffer);
+
             Mesh instanceMesh;
             Color color1, color2;
             if (index == leafIndex) {
@@ -141,6 +140,7 @@ public class Fractal : MonoBehaviour {
                 color2 = gradient2.Evaluate(gradientInterpolator);
                 instanceMesh = mesh;
             }
+
             propertyBlock.SetColor(COLOR_1, color1);
             propertyBlock.SetColor(COLOR_2, color2);
             propertyBlock.SetVector(SEQUENCE_NUMBERS, sequenceNumbers[index]);
@@ -149,7 +149,7 @@ public class Fractal : MonoBehaviour {
     }
 
     struct Child {
-        public float3 direction, worldPosition;
+        public float3 worldPosition;
         public quaternion rotation, worldRotation;
         public float spinAngle;
     }
@@ -169,10 +169,23 @@ public class Fractal : MonoBehaviour {
             var parent = parents[index / childCount];
             var child = children[index];
             child.spinAngle += spinAngleDelta;
-            child.worldRotation = math.mul(parent.worldRotation,
+
+            var upAxis = math.mul(math.mul(parent.worldRotation, child.rotation), math.up());
+            var sagAxis = math.cross(math.up(), upAxis);
+            var sagMagnitude = math.length(sagAxis);
+            quaternion baseRotation;
+            if (sagMagnitude > 0) {
+                sagAxis /= sagMagnitude;
+                var sagRotation = quaternion.AxisAngle(sagAxis, math.PI * .25f);
+                baseRotation = math.mul(sagRotation, parent.worldRotation);
+            } else {
+                baseRotation = parent.worldRotation;
+            }
+
+            child.worldRotation = math.mul(baseRotation,
                 math.mul(child.rotation, quaternion.RotateY(child.spinAngle)));
             child.worldPosition = parent.worldPosition +
-                                  math.mul(parent.worldRotation, child.direction * (scale * CHILD_OFFSET));
+                                  math.mul(child.worldRotation, math.float3(0, scale * CHILD_OFFSET, 0));
             children[index] = child;
             matrices[index] = Matrix(child, scale);
         }
