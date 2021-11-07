@@ -33,7 +33,7 @@ public class Fractal : MonoBehaviour {
     NativeArray<Child>[] children;
     NativeArray<float3x4>[] matrices;
     ComputeBuffer[] matricesBuffers;
-    Vector2[] sequenceNumbers;
+    Vector4[] sequenceNumbers;
     static MaterialPropertyBlock propertyBlock;
 
     void Awake() => Initialize();
@@ -42,14 +42,14 @@ public class Fractal : MonoBehaviour {
         children = new NativeArray<Child>[depth];
         matrices = new NativeArray<float3x4>[depth];
         matricesBuffers = new ComputeBuffer[depth];
-        sequenceNumbers = new Vector2[depth];
+        sequenceNumbers = new Vector4[depth];
         propertyBlock = new MaterialPropertyBlock();
         const int stride = sizeof(float) * 12;
         for (int index = 0, length = 1; index < children.Length; index++, length *= CHILDREN.Length) {
             children[index] = new NativeArray<Child>(length, Allocator.Persistent);
             matrices[index] = new NativeArray<float3x4>(length, Allocator.Persistent);
             matricesBuffers[index] = new ComputeBuffer(length, stride);
-            sequenceNumbers[index] = new Vector2(Random.value, Random.value);
+            sequenceNumbers[index] = new Vector4(Random.value, Random.value, Random.value, Random.value);
         }
 
         var level = 0;
