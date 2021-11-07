@@ -18,7 +18,6 @@ public class Fractal : MonoBehaviour {
     const int MIN_DEPTH = 3, MAX_DEPTH = 8;
     const float CHILD_OFFSET = 1.5f;
     const float CHILD_SCALE = .5f;
-    const float ROTATION_SPEED = .125f * math.PI;
 
     static readonly int MATRICES = Shader.PropertyToID("Matrices");
     static readonly int COLOR_1 = Shader.PropertyToID("Color1");
@@ -31,6 +30,7 @@ public class Fractal : MonoBehaviour {
     [SerializeField] Gradient gradient1, gradient2;
     [SerializeField] Color leafColor1, leafColor2;
     [SerializeField, MinMaxSlider(0, 90)] Vector2 maxSagAngle = new Vector2(15, 25);
+    [SerializeField, MinMaxSlider(0, 90)] Vector2 spinSpeed = new Vector2(20, 25);
 
     NativeArray<Child>[] children;
     NativeArray<float3x4>[] matrices;
@@ -69,7 +69,8 @@ public class Fractal : MonoBehaviour {
         Child CreateChild(int index) {
             return new Child {
                 rotation = CHILD_ROTATION[index],
-                maxSagAngle = math.radians(Random.Range(maxSagAngle.x, maxSagAngle.y))
+                maxSagAngle = math.radians(Random.Range(maxSagAngle.x, maxSagAngle.y)),
+                spinSpeed = math.radians(Random.Range(spinSpeed.x, spinSpeed.y))
             };
         }
     }
@@ -96,10 +97,10 @@ public class Fractal : MonoBehaviour {
     }
 
     void Update() {
-        var spinAngleDelta = ROTATION_SPEED * Time.deltaTime;
+        var deltaTime = Time.deltaTime;
         var level = 0;
         var root = children[level][0];
-        root.spinAngle += spinAngleDelta;
+        root.spinAngle += root.spinSpeed * deltaTime;
         var rootTransform = transform;
         root.worldRotation =
             math.mul(rootTransform.rotation, math.mul(root.rotation, quaternion.RotateY(root.spinAngle)));
@@ -114,7 +115,7 @@ public class Fractal : MonoBehaviour {
             scale *= CHILD_SCALE;
             var job = new UpdateFractalLevelJob {
                 childCount = CHILD_ROTATION.Length,
-                spinAngleDelta = spinAngleDelta,
+                deltaTime = deltaTime,
                 scale = scale,
                 parents = children[level - 1],
                 children = children[level],
@@ -154,14 +155,14 @@ public class Fractal : MonoBehaviour {
     struct Child {
         public float3 worldPosition;
         public quaternion rotation, worldRotation;
-        public float maxSagAngle, spinAngle;
+        public float maxSagAngle, spinAngle, spinSpeed;
     }
 
     [BurstCompile(FloatPrecision.Standard, FloatMode.Fast)]
     struct UpdateFractalLevelJob : IJobFor {
         public int childCount;
-        public float spinAngleDelta;
         public float scale;
+        public float deltaTime;
 
         [Unity.Collections.ReadOnly] public NativeArray<Child> parents;
         public NativeArray<Child> children;
@@ -171,7 +172,7 @@ public class Fractal : MonoBehaviour {
         void IJobFor.Execute(int index) {
             var parent = parents[index / childCount];
             var child = children[index];
-            child.spinAngle += spinAngleDelta;
+            child.spinAngle += child.spinSpeed * deltaTime;
 
             var upAxis = math.mul(math.mul(parent.worldRotation, child.rotation), math.up());
             var sagAxis = math.cross(math.up(), upAxis);
