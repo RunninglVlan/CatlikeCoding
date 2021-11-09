@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class AdvancedMultiStreamProceduralMesh : MonoBehaviour {
-    const int VERTEX_ATTRIBUTES = 4, VERTICES = 4;
+    const int VERTEX_ATTRIBUTES = 4, VERTICES = 4, TRIANGLE_INDICES = 6;
 
     void OnEnable() {
         var meshDataArray = Mesh.AllocateWritableMeshData(1);
@@ -20,6 +20,7 @@ public class AdvancedMultiStreamProceduralMesh : MonoBehaviour {
                 [3] = new VertexAttributeDescriptor(VertexAttribute.TexCoord0, dimension: 2, stream: 3)
             };
         meshData.SetVertexBufferParams(VERTICES, vertexAttributes);
+        meshData.SetIndexBufferParams(TRIANGLE_INDICES, IndexFormat.UInt16);
         vertexAttributes.Dispose();
 
         var positions = meshData.GetVertexData<float3>();
@@ -36,6 +37,13 @@ public class AdvancedMultiStreamProceduralMesh : MonoBehaviour {
         texCoords[1] = math.float2(0, 1);
         texCoords[2] = 1;
         texCoords[3] = math.float2(1, 0);
+        var triangleIndices = meshData.GetIndexData<ushort>();
+        triangleIndices[0] = 0;
+        triangleIndices[1] = 1;
+        triangleIndices[2] = 3;
+        triangleIndices[3] = 3;
+        triangleIndices[4] = 1;
+        triangleIndices[5] = 2;
 
         var mesh = new Mesh { name = "ProceduralMesh" };
         Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
