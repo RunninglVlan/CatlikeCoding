@@ -1,4 +1,5 @@
 using Unity.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -20,6 +21,21 @@ public class AdvancedMultiStreamProceduralMesh : MonoBehaviour {
             };
         meshData.SetVertexBufferParams(VERTICES, vertexAttributes);
         vertexAttributes.Dispose();
+
+        var positions = meshData.GetVertexData<float3>();
+        positions[0] = 0;
+        positions[1] = math.up();
+        positions[2] = math.float3(1, 1, 0);
+        positions[3] = math.right();
+        var normals = meshData.GetVertexData<float3>(1);
+        normals[0] = normals[1] = normals[2] = normals[3] = math.back();
+        var tangents = meshData.GetVertexData<float4>(2);
+        tangents[0] = tangents[1] = tangents[2] = tangents[3] = math.float4(1, 0, 0, -1);
+        var texCoords = meshData.GetVertexData<float2>(3);
+        texCoords[0] = 0;
+        texCoords[1] = math.float2(0, 1);
+        texCoords[2] = 1;
+        texCoords[3] = math.float2(1, 0);
 
         var mesh = new Mesh { name = "ProceduralMesh" };
         Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
