@@ -45,10 +45,14 @@ public class AdvancedMultiStreamProceduralMesh : MonoBehaviour {
         triangleIndices[4] = 1;
         triangleIndices[5] = 2;
 
+        var bounds = new Bounds(new Vector3(.5f, .5f), new Vector3(1, 1));
         meshData.subMeshCount = 1;
-        meshData.SetSubMesh(0, new SubMeshDescriptor(0, TRIANGLE_INDICES));
+        meshData.SetSubMesh(0, new SubMeshDescriptor(0, TRIANGLE_INDICES) {
+            bounds = bounds,
+            vertexCount = VERTICES
+        }, MeshUpdateFlags.DontRecalculateBounds);
 
-        var mesh = new Mesh { name = "ProceduralMesh" };
+        var mesh = new Mesh { name = "ProceduralMesh", bounds = bounds };
         Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
         GetComponent<MeshFilter>().mesh = mesh;
     }
