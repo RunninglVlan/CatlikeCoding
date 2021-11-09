@@ -45,6 +45,9 @@ public class AdvancedMultiStreamProceduralMesh : MonoBehaviour {
         triangleIndices[4] = 1;
         triangleIndices[5] = 2;
 
+        meshData.subMeshCount = 1;
+        meshData.SetSubMesh(0, new SubMeshDescriptor(0, TRIANGLE_INDICES));
+
         var mesh = new Mesh { name = "ProceduralMesh" };
         Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
         GetComponent<MeshFilter>().mesh = mesh;
