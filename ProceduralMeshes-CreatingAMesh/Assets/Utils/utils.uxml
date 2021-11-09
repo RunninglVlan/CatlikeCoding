@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="utils.uss" />
+    <ui:VisualElement name="controls" />
+    <ui:Label text="FPS&#10;000&#10;000&#10;000" name="fps" class="panel" />
+    <ui:VisualElement name="info">
+        <ui:Button text="i" />
+        <ui:VisualElement name="info-panel" class="panel" style="display: none;">
+            <ui:Label text="Catlike Coding Basic Tutorial&#10;Compute Shaders - Rendering One Million Cubes" />
+            <ui:Button text="Go to Tutorial" name="info-link" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
