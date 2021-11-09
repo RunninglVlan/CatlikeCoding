@@ -6,7 +6,7 @@ using static UnityEngine.UI.Button;
 public class Controls : MonoBehaviour {
     [SerializeField] Control[] controls;
 
-    void Awake() {
+    void OnEnable() {
         var root = GetComponent<UIDocument>().rootVisualElement;
         var controlsElement = root.Q<VisualElement>("controls");
         foreach (var control in controls) {

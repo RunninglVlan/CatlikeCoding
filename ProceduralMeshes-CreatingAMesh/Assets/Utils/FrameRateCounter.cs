@@ -10,7 +10,7 @@ public class FrameRateCounter : MonoBehaviour {
     int frames;
     float duration, bestDuration = float.MaxValue, worstDuration;
 
-    void Awake() {
+    void OnEnable() {
         var root = GetComponent<UIDocument>().rootVisualElement;
         display = root.Q<Label>("fps");
     }

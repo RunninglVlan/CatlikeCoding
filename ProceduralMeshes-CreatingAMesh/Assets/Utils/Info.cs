@@ -7,7 +7,7 @@ public class Info : MonoBehaviour {
 
     VisualElement panel;
 
-    void Awake() {
+    void OnEnable() {
         var root = GetComponent<UIDocument>().rootVisualElement;
         var info = root.Q<VisualElement>("info");
         info.Q<Label>().text = text;
